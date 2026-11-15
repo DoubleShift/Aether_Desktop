@@ -80,6 +80,11 @@ pub enum IpVersion {
 pub enum TrafficMode {
     #[default]
     Global,
+    // `rename_all = "UPPERCASE"` spells this variant `SOCKSONLY`, but the UI
+    // sends the SCREAMING_SNAKE value `SOCKS_ONLY` (advanced.js TRAFFIC_MODES).
+    // Without this explicit rename every set_profile that switches the mode
+    // fails to deserialize and the switch silently stays on Global.
+    #[serde(rename = "SOCKS_ONLY")]
     SocksOnly,
 }
 
@@ -2297,6 +2302,32 @@ mod tests {
         let j = serde_json::to_string(&q).unwrap();
         assert!(j.contains("\"masqueSni\"") && j.contains("\"disableGrease\":true"));
         assert_eq!(serde_json::from_str::<ConnectionProfile>(&j).unwrap(), q);
+    }
+
+    /// The UI (advanced.js TRAFFIC_MODES) sends the SCREAMING_SNAKE wire value
+    /// `SOCKS_ONLY`. serde's `rename_all = "UPPERCASE"` alone spells the
+    /// variant `SOCKSONLY`, so every set_profile that switched the mode failed
+    /// to deserialize and the toggle silently stayed on Global. This pins the
+    /// exact wire contract on both directions.
+    #[test]
+    fn traffic_mode_wire_values_match_the_ui() {
+        assert_eq!(TrafficMode::default(), TrafficMode::Global);
+        let global = serde_json::to_string(&TrafficMode::Global).unwrap();
+        let socks = serde_json::to_string(&TrafficMode::SocksOnly).unwrap();
+        assert_eq!(global, "\"GLOBAL\"");
+        assert_eq!(socks, "\"SOCKS_ONLY\"");
+        assert_eq!(
+            serde_json::from_str::<TrafficMode>("\"GLOBAL\"").unwrap(),
+            TrafficMode::Global
+        );
+        assert_eq!(
+            serde_json::from_str::<TrafficMode>("\"SOCKS_ONLY\"").unwrap(),
+            TrafficMode::SocksOnly
+        );
+        // The whole profile round-trips through the exact shape the UI sends.
+        let old = r#"{"trafficMode":"SOCKS_ONLY"}"#;
+        let p: ConnectionProfile = serde_json::from_str(old).unwrap();
+        assert_eq!(p.traffic_mode, TrafficMode::SocksOnly);
     }
 }
 
