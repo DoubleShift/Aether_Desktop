@@ -280,10 +280,13 @@ const header = `/* =============================================================
 // substitutes both stops). Pin the connection card's gradient explicitly so
 // the variable re-pinning above is what the browser actually paints.
 const FINAL = `
-/* Final word on the connection card: a white surface, not a tinted scrim. */
+/* Final word on the connection card: a white surface, not a tinted scrim.
+   The drop shadow is kept deliberately tight: the card is flexed close to the
+   window bottom, and a wide shadow would spill into the last three viewport
+   rows that tests/layout-desktop.mjs requires to stay pure background. */
 html[data-theme="light"] .ccard {
   background: linear-gradient(180deg, #FFFFFF, #F1F5FB) !important;
-  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.10) !important;
+  box-shadow: 0 6px 14px rgba(15, 23, 42, 0.10) !important;
 }
 
 /* Small card labels are pinned to translucent white in upstream app.css and
@@ -300,11 +303,12 @@ html[data-theme="light"] .ccard__caption {
 }
 
 /* Home layout: no dead band under the connection card.
-   At 390x820 the card ended at y=710, leaving 110px of empty window
-   (28px .main padding + content shorter than the viewport). With the profile
-   chip removed the gap grows to ~160px. Let the card own the remaining height
-   and spread its rows so the panel reaches the bottom of the window. */
-html[data-theme="light"] .main { padding-bottom: 12px !important; }
+   At 390x820 the card ended at y=710, leaving 110px of empty window. The card
+   now owns the remaining height and its rows spread across it. A 32px bottom
+   gutter is kept: it is small enough that the old empty band is gone, but
+   leaves room for the card's tightened drop shadow to fade out before the
+   last three viewport rows (tests/layout-desktop.mjs checks those stay blank). */
+html[data-theme="light"] .main { padding-bottom: 32px !important; }
 html[data-theme="light"] .view--home { min-height: 100% !important; }
 html[data-theme="light"] .view--home .ccard {
   display: flex !important;
