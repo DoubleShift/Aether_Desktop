@@ -275,6 +275,18 @@ const header = `/* =============================================================
    ========================================================================== */
 
 `
-fs.writeFileSync(OUT, header + TOKENS + '\n' + blocks.join('\n\n') + '\n', 'utf8')
+// Emitted LAST: the automatic mapper occasionally rewrites a gradient that is
+// built purely from custom properties (it sees a neighbouring rgba stop and
+// substitutes both stops). Pin the connection card's gradient explicitly so
+// the variable re-pinning above is what the browser actually paints.
+const FINAL = `
+/* Final word on the connection card: a white surface, not a tinted scrim. */
+html[data-theme="light"] .ccard {
+  background: linear-gradient(180deg, #FFFFFF, #F1F5FB) !important;
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.10) !important;
+}
+`
+
+fs.writeFileSync(OUT, header + TOKENS + '\n' + blocks.join('\n\n') + '\n' + FINAL, 'utf8')
 console.log(`wrote ${path.relative(ROOT, OUT)}: ${stats.rules} rules, ${stats.decls} declarations`)
 console.log('per file:', stats.files)
