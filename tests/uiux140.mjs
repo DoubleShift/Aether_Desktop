@@ -91,7 +91,10 @@ try {
   }
   await page.goto(`http://127.0.0.1:${server.address().port}/`,{waitUntil:'networkidle0'})
   await shot('home-profiles')
-  await click('.presets__trigger');await shot('profile-menu-cards');await page.keyboard.press('Escape')
+  // The profile chip was removed from Home, so there is no modal to open.
+  // Keep the evidence slot but assert the chip is actually gone.
+  assert.equal(await page.$('.presets__trigger'),null,'profile chip must not be mounted')
+  await shot('profile-menu-cards')
   await click('.drawer__item[data-tab="advanced"]');await open('custom')
   await shot('a1-chain-health')
   if(!baseline){

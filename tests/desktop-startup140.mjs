@@ -24,10 +24,10 @@ assert(!document.querySelector('#connect'),'no connection control races startup'
 ready();await main.bootReady
 assert(document.querySelector('#connect'),'Home hydrates after real ready contract')
 await new Promise(resolve=>setTimeout(resolve,0))
-assert.equal(document.querySelector('.presets__trigger').textContent,'پیش‌فرض')
+assert.equal(document.querySelector('.presets__trigger'),null,'home must not mount the profile chip')
 assert(!document.querySelector('.boot-skeleton'))
 const source=readFileSync('src-tauri/src/leakguard.rs','utf8')
 assert(source.includes('const CHROMIUM_POLICY_NAME: &str = "WebRtcIPHandling";'))
 assert(!source.includes('WebRtcIPHandlingPolicy'))
-console.log('PASS: static first paint, blocked backend shell, readiness ordering, Home hydration, Persian Default, exact WebRTC policy')
+console.log('PASS: static first paint, blocked backend shell, readiness ordering, Home hydration, no profile chip, exact WebRTC policy')
 dom.window.close();process.exit(0)

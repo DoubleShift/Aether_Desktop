@@ -298,6 +298,21 @@ html[data-theme="light"] .ccard__pill-k,
 html[data-theme="light"] .ccard__caption {
   color: rgba(17, 28, 46, 0.62) !important;
 }
+
+/* Home layout: no dead band under the connection card.
+   At 390x820 the card ended at y=710, leaving 110px of empty window
+   (28px .main padding + content shorter than the viewport). With the profile
+   chip removed the gap grows to ~160px. Let the card own the remaining height
+   and spread its rows so the panel reaches the bottom of the window. */
+html[data-theme="light"] .main { padding-bottom: 12px !important; }
+html[data-theme="light"] .view--home { min-height: 100% !important; }
+html[data-theme="light"] .view--home .ccard {
+  flex: 1 1 auto !important;
+  min-height: 386px !important;
+}
+html[data-theme="light"] .view--home .ccard__body {
+  justify-content: space-between !important;
+}
 `
 
 fs.writeFileSync(OUT, header + TOKENS + '\n' + blocks.join('\n\n') + '\n' + FINAL, 'utf8')

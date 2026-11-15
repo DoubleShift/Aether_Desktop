@@ -30,7 +30,7 @@ try {
  const metric=await page.evaluate(()=>({paint:performance.getEntriesByType('paint').map(p=>({name:p.name,ms:p.startTime})),stateReads:window.__calls.filter(c=>['get_profile','get_snapshot'].includes(c)),shell:!!document.querySelector('.boot-skeleton')}))
  assert(metric.shell);assert.equal(metric.stateReads.length,0);assert(metric.paint.find(p=>p.name==='first-contentful-paint').ms<1000,'local Chromium FCP under 1s')
  await page.screenshot({path:join(out,'startup-pending-fa.png')})
- await page.evaluate(()=>window.__releaseStartup());await page.waitForSelector('#connect');assert.equal(await page.$eval('.presets__trigger',e=>e.textContent),'پیش‌فرض')
+ await page.evaluate(()=>window.__releaseStartup());await page.waitForSelector('#connect');assert.equal(await page.$('.presets__trigger'),null,'home must not mount the profile chip')
  await page.goto(url,{waitUntil:'domcontentloaded'});await page.waitForFunction(()=>!!window.__failStartup);await page.evaluate(()=>window.__failStartup('Injected initialization failure'))
  await page.waitForSelector('.boot-error');assert.equal(await page.$eval('#view button',e=>e.textContent),'تلاش مجدد');await page.screenshot({path:join(out,'startup-error-retry-fa.png')})
  await writeFile(join(out,'startup-metrics.json'),JSON.stringify({...metric,environment:'Linux Chromium; IPC gated fixture; not Windows WebView2 cold-start timing',readyHydration:'PASS',errorRetry:'PASS'},null,2))

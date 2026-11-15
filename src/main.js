@@ -450,8 +450,6 @@ function translateChrome() {
   if (menuBtn) { menuBtn.innerHTML = icon('menu', 24); menuBtn.setAttribute('aria-label', t('Menu')) }
   const backBtn = document.getElementById('back-btn')
   if (backBtn) { backBtn.innerHTML = icon('arrow_back', 24); backBtn.setAttribute('aria-label', t('Back')) }
-  const hdrTune = document.getElementById('hdr-tune')
-  if (hdrTune) { hdrTune.innerHTML = icon('tune', 22); hdrTune.setAttribute('aria-label', t('Tunnel settings')); hdrTune.title = t('Tunnel settings') }
   const dTitle = document.querySelector('.drawer__title')
   if (dTitle) dTitle.textContent = t('Aether')
   const dTag = document.querySelector('.drawer__tagline')

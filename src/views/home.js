@@ -21,7 +21,6 @@
 import { app, onChange, toggleConnection, accentFor } from '../main.js'
 import { t } from '../i18n.js'
 import { createConnectionCard, isRedundantCaption } from './connectioncard.js'
-import { createPresetSelector } from '../ui/presets.js'
 import { startAetherMark } from '../ui/aethermark.js'
 import { homeAnimationsEnabled, onHomeAnimationsChange } from '../ui/feedback.js'
 
@@ -120,7 +119,10 @@ export function renderHome() {
     <p class="shield" id="shield" hidden><span class="shield__dot"></span><span id="shield-text"></span></p>
   `
 
-  root.prepend(createPresetSelector())
+  // The profile selector chip was removed from the home screen in this build:
+  // it was the only visual element above the connect button and added no value
+  // for a single-profile setup. Profile IPC still lives in ui/presets.js for
+  // callers that need it, but nothing mounts it here anymore.
   const card = createConnectionCard()
   root.appendChild(card.node)
 
