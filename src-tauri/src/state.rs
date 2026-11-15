@@ -1616,16 +1616,31 @@ impl AetherController {
             .get(self.plan_index)
             .map(|c| c.profile.clone())
             .unwrap_or_else(|| self.profile.clone());
+        // Traffic mode: Global keeps the upstream data path (system proxy +
+        // Wintun). SocksOnly starts only the local bridge so a single app can
+        // be pointed at it; it must not touch the system proxy, the routing
+        // table, or the machine-wide firewall rules owned by LeakGuard.
+        let socks_only = profile.traffic_mode == crate::profile::TrafficMode::SocksOnly;
+        if socks_only {
+            DiagnosticsLog::i(
+                TAG,
+                "Traffic mode: SOCKS-only — local bridge only, no system proxy / TUN / leak guard",
+            );
+        }
 
         // ۰) گارد نشتی — *قبل* از هر چیز دیگری. ترتیب امنیتی است، نه سلیقه‌ای:
         // تا وقتی مسیر UDP مستقیم باز است نباید مرورگر را به تونل وصل کنیم،
         // وگرنه بین «پروکسی روشن شد» و «گارد نصب شد» یک پنجرهٔ نشتی می‌ماند.
-        if self.profile.leak_guard || self.profile.kill_switch || self.profile.ipv6_protection {
+        // In SOCKS-only mode there is no system-wide data path to protect and
+        // no global proxy for the browser to leak around, so the machine-wide
+        // LeakGuard must stay off (it would rewrite the user's firewall/Policies
+        // for a tunnel they only wanted one app to use).
+        if !socks_only && (self.profile.leak_guard || self.profile.kill_switch || self.profile.ipv6_protection) {
             if let Some(mut old_guard) = self.guard.take() {
                 old_guard.disarm_without_cleanup();
             }
             self.guard = Some(LeakGuard::engage(&profile));
-        } else {
+        } else if !socks_only {
             DiagnosticsLog::w(
                 TAG,
                 "Leak guard is disabled in the profile — WebRTC may expose your real IP over direct UDP.",
@@ -1663,10 +1678,19 @@ impl AetherController {
         }
 
         // ۲) پروکسی سیستمی ویندوز — معادل کارکرد VpnService (کل سیستم از تونل می‌رود).
-        self.sysproxy_on = sysproxy::enable(engine::SHARE_HTTP_PORT, engine::SHARE_SOCKS_PORT);
+        // Skipped in SOCKS-only mode: changing HKCU system-proxy settings would
+        // take over every application, which is exactly what this mode avoids.
+        if !socks_only {
+            self.sysproxy_on = sysproxy::enable(engine::SHARE_HTTP_PORT, engine::SHARE_SOCKS_PORT);
+        } else {
+            self.sysproxy_on = false;
+        }
 
         // ۳) Wintun — اختیاری. شکست آن دیگر اتصال را نمی‌کُشد (رفع ریشه‌ای گیر StartingEngine).
-        if self.tunnel.is_none() {
+        // Skipped in SOCKS-only mode: installing the 0.0.0.0/0 route would
+        // capture all traffic, and requiring wintun.dll would make a proxy-only
+        // connection fail on installs that intentionally ship no TUN adapter.
+        if !socks_only && self.tunnel.is_none() {
             let wintun = std::env::current_exe()
                 .ok()
                 .and_then(|p| p.parent().map(|d| d.join("engine").join("wintun.dll")))

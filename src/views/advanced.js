@@ -118,6 +118,12 @@ const ENDPOINT_MODES = [
   ['MANUAL_RANGE', 'Manual range'],
 ]
 const SPLIT_MODES = [['OFF', 'Off'], ['INCLUDE', 'Only these apps'], ['EXCLUDE', 'All except these']]
+// Values must match Rust `TrafficMode` serde(rename_all = "UPPERCASE"):
+// Global -> "GLOBAL", SocksOnly -> "SOCKS_ONLY".
+const TRAFFIC_MODES = [
+  ['GLOBAL', 'Global'],
+  ['SOCKS_ONLY', 'Local proxy port'],
+]
 const MTU_PRESETS = [1280, 1380, 1420, 1500]
 // ۱.۴.۰ (MTU دستی): مقداری که کاربر تایپ کرده و جزو پیش‌تنظیم‌ها نیست هم باید
 // در فهرست بماند؛ وگرنه <select> هیچ گزینه‌ای را انتخاب‌شده نشان نمی‌داد و
@@ -573,10 +579,22 @@ const SECTIONS = {
       noteRow(t('Smart tries the protocols one at a time, starting with the one most likely to work on this network, and keeps the first one that passes the self-test.'),
         `id="smart-note" ${p.protocol === 'SMART' && !noWarp && !torReverse(backend) ? '' : 'hidden'}`),
     ].join('')
+    const trafficMode = p.trafficMode || 'GLOBAL'
     return `
     <section class="field" id="tor-caps-note" hidden>
       <span class="field__hint" id="tor-caps-note-text"></span>
     </section>
+    <div class="scard-group">
+      ${groupCaption(t('Traffic mode'))}
+      <div class="sethub__card scard scard--fields">
+        ${segmented(t('How traffic uses the tunnel'), 'trafficMode', TRAFFIC_MODES, trafficMode)}
+        <section class="field">
+          <span class="field__hint" id="traffic-mode-hint">${trafficMode === 'SOCKS_ONLY'
+            ? t('Local proxy port: only the local SOCKS5 bridge starts. Other apps keep their normal traffic; point an individual app at SOCKS5 127.0.0.1:10810 (or HTTP 127.0.0.1:10811) to tunnel just that app. No system proxy, no virtual adapter. Takes effect on the next connect.')
+            : t('Global: the tunnel becomes the Windows system proxy and a virtual adapter carries all traffic, so every app is tunnelled. Takes effect on the next connect.')}</span>
+        </section>
+      </div>
+    </div>
     <div class="scard-group">
       ${groupCaption(t('Network backend'))}
       <div class="sethub__card scard">
@@ -821,7 +839,7 @@ export function renderAdvanced(sections) {
       // v13: عوض شدن بک‌اند هم — گروه تور می‌آید/می‌رود، توضیحِ بک‌اند و
       // متنِ کشورِ خروجی عوض می‌شود، و در زنجیرهٔ برعکس انتخابگر پروتکل
       // دلیلِ قفل‌بودنش را می‌نویسد. بدون بازرندر، پنل حرفِ حالتِ قبلی را می‌زد.
-      if (key === 'accessMode' || key === 'backend' || key === 'goolMode') {
+      if (key === 'accessMode' || key === 'backend' || key === 'goolMode' || key === 'trafficMode') {
         refreshTab(app.tab === 'tunnel' ? 'tunnel' : 'advanced')
       }
     })

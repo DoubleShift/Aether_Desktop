@@ -66,6 +66,23 @@ pub enum IpVersion {
     Both,
 }
 
+/// How the finished tunnel is attached to Windows.
+///
+/// `Global` is the upstream behaviour: the local HTTP<->SOCKS bridge is set as
+/// the system proxy (WinINET) and a Wintun adapter carries the default routes,
+/// so every application is tunnelled. `SocksOnly` deliberately touches neither
+/// the system proxy nor the routing table; it only starts the local SOCKS5
+/// bridge (127.0.0.1:10810 / HTTP 127.0.0.1:10811) so the user can point an
+/// individual application at it. Default stays `Global` so existing installs
+/// keep their behaviour and old profile.json files deserialize unchanged.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, Default)]
+#[serde(rename_all = "UPPERCASE")]
+pub enum TrafficMode {
+    #[default]
+    Global,
+    SocksOnly,
+}
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "UPPERCASE")]
 pub enum Noize {
@@ -485,6 +502,11 @@ pub struct ConnectionProfile {
     /// اشتراک تونل با دستگاه‌های دیگر روی همان شبکه (پورت‌های 10810/10811).
     #[serde(default)]
     pub lan_share: bool,
+    /// Route the finished tunnel to Windows: global (system proxy + Wintun)
+    /// or local SOCKS5 bridge only. Defaults to global so existing installs
+    /// are unchanged. (Persisted; camelCase -> trafficMode on the JS side.)
+    #[serde(default)]
+    pub traffic_mode: TrafficMode,
     /// v1.2.0 — هنگام قطع تونل، ترافیک مستقیم مرورگرها را قطع می‌کند.
     pub kill_switch: bool,
     /// v1.2.0 — IPv6 عمومی فقط از مسیر حفاظت‌شده عبور کند؛ پیش‌فرض روشن.
@@ -700,6 +722,7 @@ impl Default for ConnectionProfile {
             ech_config: String::new(),
             masque_http2: false,
             lan_share: false,
+            traffic_mode: TrafficMode::Global,
             kill_switch: true,
             ipv6_protection: true,
             // مثل موبایل ۱.۳.۰ (`reconnectRetryLimit = 5`). سقف پایینِ ۳ در

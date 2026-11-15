@@ -822,4 +822,10 @@ Zero Trust|||Zero Trust
 Zero Trust sign-in was cancelled, so the connection was stopped. Sign in under Settings → Zero Trust, or connect again when you have the code.|||Zero Trust 登录已取消，连接因此停止。请在「设置 → Zero Trust」中登录，或拿到验证码后重新连接。
 Zero‑leak guard active|||防泄露保护已启用
 Smart tries the protocols one at a time, starting with the one most likely to work on this network, and keeps the first one that passes the self-test.|||智能模式会逐个尝试协议，从当前网络最可能成功的方式开始，并保留第一个通过自检的协议。
+Traffic mode|||流量模式
+How traffic uses the tunnel|||隧道流量的使用方式
+Global|||全局接管
+Local proxy port|||仅本地代理端口
+Local proxy port: only the local SOCKS5 bridge starts. Other apps keep their normal traffic; point an individual app at SOCKS5 127.0.0.1:10810 (or HTTP 127.0.0.1:10811) to tunnel just that app. No system proxy, no virtual adapter. Takes effect on the next connect.|||仅本地代理端口：只启动本地 SOCKS5 桥。其他应用保持原有流量不变；只需在单个应用里填写 SOCKS5 127.0.0.1:10810（或 HTTP 127.0.0.1:10811），即可只让该应用走隧道。不修改系统代理，不安装虚拟网卡。下次连接时生效。
+Global: the tunnel becomes the Windows system proxy and a virtual adapter carries all traffic, so every app is tunnelled. Takes effect on the next connect.|||全局接管：隧道会成为 Windows 系统代理，并由虚拟网卡承载全部流量，因此所有应用都走隧道。下次连接时生效。
 # NEXT

@@ -39,7 +39,7 @@ const PROFILE = {
   backend: 'AETHER_PSIPHON', exitRegion: 'DE', protocol: 'SMART', scanMode: 'BALANCED',
   ipVersion: 'V4', noize: 'FIREWALL', endpointMode: 'MANUAL_PEER', manualPeer: '1.2.3.4:443',
   manualRange: '', mtu: 1380, keepalive: 25, quickReconnect: true, masqueHttp2: false,
-  fragment: true, ech: true, lanShare: false, killSwitch: true, ipv6Protection: true,
+  fragment: true, ech: true, lanShare: false, trafficMode: 'GLOBAL', killSwitch: true, ipv6Protection: true,
   reconnectAttempts: 5, splitMode: 'INCLUDE', splitApps: ['chrome.exe'], team: 'acme',
   accessMode: 'SERVICE_TOKEN', accessEmail: '', accessId: 'x.access', gateway: false,
   routeBlock: ['ads.example.com'], routeDirect: ['bank.ir'], routeSniff: true,
@@ -105,7 +105,7 @@ for (const row of SETTINGS_ROWS) {
 const EXPECTED = [
   '__lang', 'backend', 'exitRegion', 'protocol', 'scanMode', 'ipVersion', 'noize',
   'endpointMode', 'manualPeer', 'mtu', 'keepalive', 'quickReconnect', 'masqueHttp2',
-  'fragment', 'ech', 'lanShare', 'killSwitch', 'ipv6Protection', 'reconnectAttempts',
+  'fragment', 'ech', 'lanShare', 'trafficMode', 'killSwitch', 'ipv6Protection', 'reconnectAttempts',
   'splitMode', 'splitApps', 'team', 'accessMode', 'accessId', 'accessSecret', 'gateway',
   'routeBlock', 'routeDirect', 'routeSniff', 'dns', 'upstream', 'reprovision',
   // core 2.4.0 TLS / API options
@@ -128,6 +128,17 @@ await new Promise((r) => setTimeout(r, 20))
 const saved = invoked.filter(([c]) => c === 'set_profile').pop()
 check(saved?.[1]?.profile?.protocol === 'WIREGUARD', 'تغییر در زیرصفحه با set_profile ذخیره می‌شود')
 
+// ---- traffic mode selector (Global / Local proxy port) ----
+const modeSeg = view.querySelector('.seg[data-key="trafficMode"]')
+check(!!modeSeg, 'ترافیک مود رندر شد')
+const socksBtn = [...(modeSeg?.querySelectorAll('.seg__item') || [])].find((b) => b.dataset.value === 'SOCKS_ONLY')
+check(socksBtn?.getAttribute('aria-checked') === 'false', 'پیشفرض GLOBAL است')
+if (socksBtn) {
+  socksBtn.dispatchEvent(new dom.window.MouseEvent('click', { bubbles: true }))
+  await new Promise((r) => setTimeout(r, 20))
+  const modeSave = invoked.filter(([c]) => c === 'set_profile').pop()
+  check(modeSave?.[1]?.profile?.trafficMode === 'SOCKS_ONLY', 'تغییر ترافیک مود با set_profile ذخیره می‌شود')
+}
 
 console.log(failures === 0 ? '\nALL OK' : `\n${failures} FAILED`)
 process.exit(failures === 0 ? 0 : 1)
