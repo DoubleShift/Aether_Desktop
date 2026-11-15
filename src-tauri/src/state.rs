@@ -507,6 +507,13 @@ impl AetherController {
         self.custom_user_profile()
     }
 
+    /// Traffic mode of the **live** data path (`false` while disconnected).
+    /// The manual self-test judges the session the same way the automatic one
+    /// does, so it must know what the data path promised.
+    pub fn socks_only(&self) -> bool {
+        self.socks_only
+    }
+
     pub fn set_profile(&mut self, profile: ConnectionProfile) -> Result<()> {
         let mut profile = profile;
         profile.normalize();

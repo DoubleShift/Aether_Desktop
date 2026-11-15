@@ -381,11 +381,16 @@ fn get_checks() -> Vec<log::ComponentCheck> {
 /// Equivalent of the Android "Run test" button — runs in a background thread
 /// so the UI never freezes; live results arrive via get_checks/read_logs.
 #[tauri::command]
-fn run_self_test() {
+fn run_self_test(app: State<'_, AppState>) {
+    // Judge the running session the same way the automatic self-test does: a
+    // live SOCKS-only session makes no system-wide promise, so the WebRTC
+    // leak check must not fail it here either. Disconnected, this is false
+    // and the manual test keeps its full leak check.
+    let socks_only = app.controller.lock().map(|c| c.socks_only()).unwrap_or(false);
     std::thread::Builder::new()
         .name("aether-manual-test".into())
-        .spawn(|| {
-            diagnostics::self_test(20_000);
+        .spawn(move || {
+            diagnostics::self_test(20_000, socks_only);
         })
         .ok();
 }
