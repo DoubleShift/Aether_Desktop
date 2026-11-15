@@ -51,6 +51,10 @@ main.app.profile = PROFILE
 main.app.snapshot = { ...main.app.snapshot, state: 'CONNECTED' }
 
 const { renderSettings, SETTINGS_ROWS } = await import('../src/views/settings.js')
+// This build defaults to Simplified Chinese, so a hub row may legitimately be
+// rendered with the translated label instead of the English title used by
+// SETTINGS_ROWS. Accept either form.
+const { t } = await import('../src/i18n.js')
 
 let failures = 0
 const check = (ok, what) => {
@@ -77,7 +81,8 @@ check(!values.some((v) => v.includes('_')), 'هیچ نام داخلیِ SNAKE_CA
 // ---- هر زیرصفحه ----
 const seen = new Set()
 for (const row of SETTINGS_ROWS) {
-  const el = [...view.querySelectorAll('.setrow__title')].find((x) => x.textContent === row.title)
+  const el = [...view.querySelectorAll('.setrow__title')].find((x) =>
+    x.textContent === row.title || x.textContent === t(row.title))
   el.closest('.setrow').dispatchEvent(new dom.window.MouseEvent('click', { bubbles: true }))
   const controls = view.querySelectorAll('.seg, .select, .switch, .input, .fdrop')
   const hints = view.querySelectorAll('.field__head .aihint')

@@ -14,7 +14,54 @@ const STORAGE_KEY = 'aether.lang'
 export const LANGS = [
   ['en', 'English'],
   ['fa', 'فارسی'],
+  ['zh', '中文'],
 ]
+
+// ---------------------------------------------------------------------------
+//  Simplified Chinese — the default UI language of this build.
+//
+//  Keys are the English source strings, exactly like FA. Anything not listed
+//  here falls back to the English original, so the low-level TLS / API /
+//  diagnostic vocabulary stays verbatim and unambiguous. This is deliberately
+//  a small "entry-point" dictionary instead of a full translation: it covers
+//  the shell, connection states, navigation and the common actions.
+// ---------------------------------------------------------------------------
+const ZH = {
+  'Freedom, in one tap': '一键连接，自由上网',
+  'Preparing Aether…': '正在启动 Aether…',
+  'Home': '主页',
+  'Settings': '设置',
+  'Tunnel settings': '隧道设置',
+  'Assistant': '智能助手',
+  'Aether AI': 'Aether 智能助手',
+  'Chat': '对话',
+  'Chat with Gemini': '与 Gemini 对话',
+  'Diagnostics': '诊断',
+  'Diagnostics & logs': '诊断与日志',
+  'Share over LAN': '局域网共享',
+  'Share VPN': '共享 VPN',
+  'About': '关于',
+  'Menu': '菜单',
+  'Back': '返回',
+  'Language': '语言',
+  'Disconnected': '未连接',
+  'Starting engine…': '正在启动引擎…',
+  'Connecting…': '正在连接…',
+  'Verifying connection…': '正在验证连接…',
+  'Connected': '已连接',
+  'Reconnecting…': '正在重连…',
+  'Disconnecting…': '正在断开…',
+  'Connection failed': '连接失败',
+  'Tap to connect securely': '点击安全连接',
+  'Tap to disconnect': '点击断开连接',
+  'Reaching the Tor network… {p}%': '正在接入 Tor 网络… {p}%',
+  'WebRTC is leaking your real IP': 'WebRTC 正在泄露真实 IP',
+  'WebRTC protected — no IP leak': 'WebRTC 已保护 — 无 IP 泄露',
+  'Checking for WebRTC leaks…': '正在检查 WebRTC 泄露…',
+  // Generic action buttons are intentionally NOT translated. Upstream's UI
+  // tests locate them by their English text (e.g. button('Cancel')), and these
+  // short verbs read fine in English next to the Chinese shell.
+}
 
 const FA = {
   // 1.4.0 — core 2.4.0 TLS / API options
@@ -1049,9 +1096,11 @@ const FA = {
 let current = (() => {
   try {
     const v = localStorage.getItem(STORAGE_KEY)
-    if (v === 'fa' || v === 'en') return v
+    if (v === 'fa' || v === 'en' || v === 'zh') return v
   } catch { /* localStorage ممکن است در دسترس نباشد */ }
-  return 'en'
+  // This build ships with Simplified Chinese as the default. An explicit
+  // en/fa choice already stored on disk is still honoured.
+  return 'zh'
 })()
 
 export function getLang() {
@@ -1069,7 +1118,7 @@ export function setLangPersister(fn) {
 
 /** زبانِ خوانده‌شده از دیسک را بی‌نوشتنِ دوباره اعمال می‌کند. true = عوض شد. */
 export function adoptStoredLang(lang) {
-  if (lang !== 'fa' && lang !== 'en') return false
+  if (lang !== 'fa' && lang !== 'en' && lang !== 'zh') return false
   try { localStorage.setItem(STORAGE_KEY, lang) } catch { /* بی‌اثر */ }
   if (lang === current) return false
   current = lang
@@ -1079,7 +1128,7 @@ export function adoptStoredLang(lang) {
 // <<< AETHER-APP-PATCH ui-lang-on-disk
 
 export function setLang(lang) {
-  current = lang === 'fa' ? 'fa' : 'en'
+  current = lang === 'fa' ? 'fa' : lang === 'zh' ? 'zh' : 'en'
   try {
     localStorage.setItem(STORAGE_KEY, current)
   } catch { /* بی‌اثر */ }
@@ -1094,10 +1143,15 @@ export function setLang(lang) {
 /** جهت و فونت کل سند را با زبان فعلی هماهنگ می‌کند. */
 export function applyLang() {
   const fa = current === 'fa'
+  const zh = current === 'zh'
   const html = document.documentElement
-  html.lang = fa ? 'fa' : 'en'
+  // Chinese is LTR; only Persian switches the document to RTL. The explicit
+  // lang tag lets WebView2 pick a CJK font instead of falling back to a
+  // Persian/Arabic face in mixed text.
+  html.lang = fa ? 'fa' : zh ? 'zh-CN' : 'en'
   html.dir = fa ? 'rtl' : 'ltr'
   document.body.classList.toggle('lang-fa', fa)
+  document.body.classList.toggle('lang-zh', zh)
 }
 
 /** ترجمهٔ یک رشتهٔ رابط — کلید = متن انگلیسی. */
@@ -1193,7 +1247,9 @@ function dynamicError(key) {
 }
 
 export function t(key) {
-  const raw = current === 'fa' ? (FA[key] ?? dynamicError(key) ?? numbered(key) ?? key) : key
+  const raw = current === 'fa' ? (FA[key] ?? dynamicError(key) ?? numbered(key) ?? key)
+            : current === 'zh' ? (ZH[key] ?? key)
+            : key
   return isolateBidi(raw)
 }
 

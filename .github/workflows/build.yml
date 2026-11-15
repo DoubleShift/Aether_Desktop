@@ -940,6 +940,7 @@ jobs:
           path: |
             dist/Aether-Setup-*.exe
             dist/Aether-Portable-*.zip
+            dist/Aether-Portable-*.7z
           if-no-files-found: error
           # پیش‌فرضِ GitHub ۹۰ روز است. هر اجرا چهار فایل می‌گذارد (دو
           # نصب‌کننده + دو زیپِ پرتابل) و سهمیهٔ فضای پلنِ Free فقط ۵۰۰
@@ -1046,6 +1047,12 @@ jobs:
         run: |
           set -euo pipefail
           assets=(dist/Aether-Setup-*.exe dist/Aether-Portable-*.zip dist/SHA256SUMS.txt)
+          # Optional LZMA2 edition of the portable package (much smaller).
+          # Only added when it was actually produced, so a runner without
+          # 7-Zip still publishes a complete release.
+          if compgen -G 'dist/Aether-Portable-*.7z' > /dev/null; then
+            assets+=(dist/Aether-Portable-*.7z)
+          fi
 
           # بیلدهای main: ریلیز کهنه حذف می‌شود تا ریلیز تازه تاریخ امروز را
           # بگیرد (گیت‌هاب زمان ساختِ اولیهٔ ریلیز را نگه می‌دارد). تگ دست

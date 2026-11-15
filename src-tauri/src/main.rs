@@ -493,12 +493,16 @@ fn get_ui_lang(app: AppHandle) -> Option<String> {
     let dir = app.path().app_local_data_dir().ok()?;
     store::PrefsStore::new(&dir)
         .get_string(UI_LANG_KEY)
-        .filter(|v| v == "fa" || v == "en")
+        .filter(|v| v == "fa" || v == "en" || v == "zh")
 }
 
 #[tauri::command]
 fn set_ui_lang(app: AppHandle, lang: String) -> Result<(), String> {
-    let lang = if lang == "fa" { "fa" } else { "en" };
+    let lang = match lang.as_str() {
+        "fa" => "fa",
+        "zh" => "zh",
+        _ => "en",
+    };
     let dir = app.path().app_local_data_dir().map_err(|e| e.to_string())?;
     std::fs::create_dir_all(&dir).map_err(|e| e.to_string())?;
     store::PrefsStore::new(&dir)

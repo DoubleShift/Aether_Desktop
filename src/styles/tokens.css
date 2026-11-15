@@ -121,3 +121,15 @@
   --settings-divider-inset: 60px;
   --settings-divider: rgba(43, 60, 99, 0.55);
 }
+
+/* --------------------------------------------------------------------------
+   Simplified Chinese UI (this build's default language).
+   i18n.js toggles .lang-zh on <body>. Without an explicit CJK stack WebView2
+   may start from the bundled Persian face and fall back inconsistently for
+   Han glyphs. Kept here (rather than in the generated light.css) because
+   tests/css-classes.mjs only scans the five upstream stylesheets.
+   -------------------------------------------------------------------------- */
+.lang-zh, .lang-zh input, .lang-zh button, .lang-zh select, .lang-zh textarea {
+  font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC",
+               "Source Han Sans SC", "Segoe UI", sans-serif;
+}
