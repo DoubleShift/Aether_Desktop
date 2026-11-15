@@ -288,6 +288,11 @@ pub struct AetherController {
     share: ShareBridge,
     uplink: Option<crate::uplink::Runtime>,
     sysproxy_on: bool,
+    /// Traffic mode of the live data path — set by [`Self::bring_up_data_path`]
+    /// the moment it decides how the tunnel is attached. `true` means the
+    /// session promised nothing machine-wide (no system proxy / TUN / guard),
+    /// so the self-test's WebRTC leak check is not applicable.
+    socks_only: bool,
     /// v1.2.0 — گارد نشتی WebRTC/UDP این نشست (Drop خودش آزادش می‌کند).
     guard: Option<LeakGuard>,
     /// v1.2.0 — آخرین نتیجهٔ سنجش نشتی، برای نشانِ صفحهٔ اصلی.
@@ -431,6 +436,7 @@ impl AetherController {
             share: ShareBridge::new(),
             uplink:None,
             sysproxy_on: false,
+            socks_only: false,
             guard: None,
             webrtc_leak: None,
             plan: Vec::new(),
@@ -1621,6 +1627,9 @@ impl AetherController {
         // be pointed at it; it must not touch the system proxy, the routing
         // table, or the machine-wide firewall rules owned by LeakGuard.
         let socks_only = profile.traffic_mode == crate::profile::TrafficMode::SocksOnly;
+        // Remember for the self-test: in this mode the session deliberately
+        // makes no machine-wide promise, so the WebRTC leak check is skipped.
+        self.socks_only = socks_only;
         if socks_only {
             DiagnosticsLog::i(
                 TAG,
@@ -1776,10 +1785,13 @@ impl AetherController {
             OUTBOUND_GRACE_MS
         };
         let grace = remaining.clamp(20_000, ceiling);
+        // The data path decided this a moment ago (bring_up_data_path); the
+        // self-test must judge the session against the promise it made.
+        let socks_only = self.socks_only;
         std::thread::Builder::new()
             .name("aether-selftest".into())
             .spawn(move || {
-                let outcome = diagnostics::self_test(grace);
+                let outcome = diagnostics::self_test(grace, socks_only);
                 *slot.lock() = Some(outcome);
             })
             .ok();

@@ -464,7 +464,12 @@ pub fn webrtc_leak_check(exit_ip: Option<&str>) -> LeakReport {
 }
 
 /// معادل `Diagnostics.run()` — دروازهٔ اعلام Connected.
-pub fn self_test(grace_ms: u64) -> SelfTestOutcome {
+///
+/// `socks_only` = the session's traffic mode is `SocksOnly`. That mode makes
+/// no system-wide promise: direct UDP from unproxied apps is expected, so the
+/// WebRTC leak check (which proves the machine-wide guard of Global mode) is
+/// not applicable and must not fail the connection.
+pub fn self_test(grace_ms: u64, socks_only: bool) -> SelfTestOutcome {
     let generation = SELF_TEST_GEN.load(std::sync::atomic::Ordering::SeqCst);
     reset_checks();
     DiagnosticsLog::i(TAG, "Starting connectivity self-test…");
@@ -607,6 +612,29 @@ pub fn self_test(grace_ms: u64) -> SelfTestOutcome {
     };
 
     // ۵) نشتی WebRTC — رفع ریشه‌ای ۱.۲.۰ باید *اثبات* شود، نه ادعا.
+    //
+    // In SocksOnly mode no system-wide guard is installed (that is the point
+    // of the mode), so a STUN server answering over direct UDP is the mode
+    // working as designed. The check below proves the machine-wide promise of
+    // Global mode; reporting a "leak" here failed every SocksOnly session
+    // right after its data plane had already verified clean.
+    if socks_only {
+        DiagnosticsLog::update_check(
+            C_LEAK,
+            "PASS",
+            Some("not applicable — local proxy port mode, direct UDP is expected"),
+        );
+        DiagnosticsLog::i(
+            TAG,
+            "WebRTC / UDP leak check: not applicable in local-proxy-port mode — no system-wide guard is installed by design.",
+        );
+        return SelfTestOutcome {
+            ok,
+            exit,
+            latency_ms,
+            leak: None,
+        };
+    }
     DiagnosticsLog::update_check(C_LEAK, "RUNNING", None);
     let leak = webrtc_leak_check(exit.as_ref().map(|e| e.ip.as_str()));
     if leak.leaking {
