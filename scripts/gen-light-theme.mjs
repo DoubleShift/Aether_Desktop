@@ -248,6 +248,21 @@ html[data-theme="light"] body {
 html[data-theme="light"] ::-webkit-scrollbar-track { background: #F1F5F9; }
 html[data-theme="light"] ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 8px; }
 html[data-theme="light"] ::selection { background: #DBEAFE; color: #111C2E; }
+
+/* The connection card deliberately pins its own palette in .ccard instead of
+   using the theme tokens (see the comment in app.css). Overriding only the
+   colour *declarations* leaves these local variables dark, which produces an
+   unreadable slate card with near-white text on a white page. Re-pin them. */
+html[data-theme="light"] .ccard {
+  --cc-accent: #2563EB;
+  --cc-surface-top: #FFFFFF;
+  --cc-surface-bottom: #F1F5FB;
+  --cc-sub: rgba(15, 23, 42, 0.045);
+  --cc-sub-border: rgba(15, 143, 107, 0.20);
+  --cc-text: #111C2E;
+  --cc-muted: rgba(17, 28, 46, 0.66);
+  --cc-dim: rgba(17, 28, 46, 0.42);
+}
 `
 
 const header = `/* ==========================================================================
