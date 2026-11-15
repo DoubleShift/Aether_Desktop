@@ -19,7 +19,8 @@
 
 import { app, onChange, refreshTab, emit, STATE_LABEL } from '../main.js'
 import { renderAdvanced } from './advanced.js'
-import { aiHintButton, refreshAi } from '../ai.js'
+// AI hint buttons were removed from this build; settings rows no longer
+// inject an assistant shortcut and no longer call ai_* IPC.
 import { t, getLang } from '../i18n.js'
 import { invoke } from '@tauri-apps/api/core'
 // AETHER-APP-PATCH custom-configs
@@ -234,13 +235,6 @@ function hubRow(row, go) {
   onChange(sync, el)
   sync()
 
-  // ✨ پیش از chevron تزریق می‌شود تا ترتیبِ a2 حفظ شود، و کلیکش داخل خودش
-  // stopPropagation دارد (در ai.js) تا ردیف را باز نکند.
-  el.insertBefore(
-    aiHintButton({ title: t(row.title), subtitle: t(row.subtitle), value: () => row.value(app.profile ?? {}) }),
-    el.querySelector('.setrow__chev'),
-  )
-
   // ردیف یک div است و نه button: یک button نمی‌تواند button دیگری (✨) را در
   // خود جای بدهد و مرورگر ساختار را بی‌صدا خراب می‌کند. نقشِ دسترسی‌پذیری
   // دستی داده می‌شود تا صفحه‌خوان و کلید Enter مثل دکمه کار کنند.
@@ -276,10 +270,6 @@ function switchRow(title, subtitle, read, write) {
   const flip = () => { write(!read()); paint() }
   sw.addEventListener('click', (e) => { e.stopPropagation(); flip() })
   el.addEventListener('click', flip)
-  el.insertBefore(
-    aiHintButton({ title: t(title), subtitle: t(subtitle), value: () => (read() ? t('On') : t('Off')) }),
-    sw,
-  )
   return el
 }
 
@@ -293,15 +283,10 @@ function resetRow() {
     '<span class="setrow__text"><span class="setrow__title"></span><span class="setrow__sub"></span></span>'
   el.querySelector('.setrow__title').textContent = t('Reset all settings to defaults')
   el.querySelector('.setrow__sub').textContent = t('Every setting goes back to its default, including endpoint ranges, routing rules and enrolment details.')
-  el.appendChild(aiHintButton({
-    title: t('Reset all settings to defaults'),
-    subtitle: t('Every setting goes back to its default, including endpoint ranges, routing rules and enrolment details.'),
-  }))
   const run = async () => {
     // بازنشانی برگشت‌ناپذیر است و در a2 هم دیالوگ تأیید دارد.
     if (!window.confirm(t('Reset every setting to its default?'))) return
     app.profile = await invoke('reset_profile')
-    refreshAi() // ai-gate-follows-tunnel: بک‌اند پیش‌فرض ممکن است دروازه را عوض کند
     refreshTab(app.tab === 'tunnel' ? 'tunnel' : 'advanced')
   }
   el.addEventListener('click', run)
@@ -321,27 +306,17 @@ function resetRow() {
  * خودشان توضیح‌اند و ✨ روی یک پاراگراف توضیح، چیزی برای پرسیدن ندارد.
  */
 function decorateFields(root) {
+  // The AI hint button is gone. Keep the .field__head wrapper because the
+  // settings stylesheet still lays labels out inside it.
   for (const field of root.querySelectorAll('.field')) {
-    // The built-in verification card has the mobile info/title/switch header.
     if (field.classList.contains('field--verify')) continue
     const labelEl = field.querySelector('.field__label')
     if (!labelEl) continue
-    if (field.querySelector('.aihint')) continue
-    const hint = field.querySelector('.field__hint')
-    // `.fdrop` (انتخابگر کشور با پرچم) هم شمرده می‌شود؛ جا افتادنش یعنی ✨ کنار
-    // «کشور خروج» مقدار فعلی را به دستیار نمی‌داد و پاسخ کورکورانه می‌شد.
-    const control = field.querySelector('.seg, .select, .switch, .input, .fdrop')
+    if (labelEl.parentElement?.classList.contains('field__head')) continue
     const head = document.createElement('div')
     head.className = 'field__head'
-    // برچسب داخل یک ردیف با ✨ می‌رود تا آیکن هم‌تراز عنوان بنشیند و نه کنارِ
-    // کنترل — همان چیدمانی که در a2 است.
     labelEl.replaceWith(head)
     head.appendChild(labelEl)
-    head.appendChild(aiHintButton({
-      title: labelEl.textContent.trim(),
-      subtitle: hint ? hint.textContent.trim() : '',
-      value: () => readControl(control),
-    }))
   }
 }
 

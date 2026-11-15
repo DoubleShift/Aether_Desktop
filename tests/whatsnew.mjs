@@ -43,7 +43,7 @@ check(root?.getAttribute('dir') === 'rtl', 'پنجره راست‌چین است'
 check(!!root.querySelector('.news__check:not([hidden])'), 'چک‌باکس دیده می‌شود')
 check(root.querySelector('.news__check span').textContent === 'دیگر این پیام را نمایش نده', 'برچسبِ دقیقِ چک‌باکس')
 const ltrSpans = [...root.querySelectorAll('.announcement-content [dir="ltr"]')].map((e) => e.textContent)
-for (const term of ['1.4.0', '2.4.0', 'NPVS v5', 'NPVT1', 'V2Ray', 'Npvt', 'HTTPS', 'Config → Aether', 'Aether → Config', 'TLS', 'Gemini', 'VPN', '390×820', 'prefs.json']) {
+for (const term of ['1.4.0', '2.4.0', 'NPVS v5', 'NPVT1', 'V2Ray', 'Npvt', 'HTTPS', 'Config → Aether', 'Aether → Config', 'TLS', 'VPN', '390×820', 'prefs.json']) {
   check(ltrSpans.includes(term), `«${term}» در span[dir=ltr]`)
 }
 check(!root.textContent.includes('Airplane Mode') && !root.textContent.includes('حالت پرواز ({') && root.textContent.includes('کارت شبکه'), 'راهنمای شبکه بومی ویندوز است')

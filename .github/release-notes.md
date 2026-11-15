@@ -1,5 +1,14 @@
 # Aether Desktop 1.4.0 — release notes
 
+## 本版改动（简体中文 / 白底版）
+
+- 界面默认改为**简体中文**：完整翻译 738 条界面文案，语言切换仍保留 English / فارسی。
+- 改为**白色背景**主题，窗口初始背景与连接卡片均为白底。
+- **已移除 AI 助手与 Gemini 对话功能**：抽屉与顶栏入口、设置页的 AI 提示按钮、前端 AI 模块，以及后端 16 个 `ai_*` 命令全部下线，不再产生任何相关网络请求。
+- 便携包改用 7-Zip Deflate ultra 压缩，并额外提供体积更小的 LZMA2 `.7z` 版本。
+
+以下为上游 1.4.0 的原始发布说明（历史记录）。
+
 Aether Core 2.4.0 remains the engine version. This release ports the portable networking and custom-config features of mobile **1.6.0** to Tauri 2 / Windows. Android Intents, camera import, airplane-mode/radio controls, VpnService and phone hotspot UI are not copied.
 
 ## Headline change: Windows UI and dimensions now match mobile 1.6.0
@@ -7,9 +16,9 @@ Aether Core 2.4.0 remains the engine version. This release ports the portable ne
 The Windows 1.4.0 interface was rebuilt to follow the mobile 1.6.0 design instead of the older 1.3.0 desktop layout. Only the frontend changed in this pass; Rust, `native/` and `third_party/` are byte-identical to the input (SHA-256 compared for 2292 files).
 
 - **Settings and cards.** The connection-verification switch is a separate card above the core settings (same `verifyConnection` key, same wording as mobile); protocol tiles are two columns with a full-width last tile; option cards share mobile's structure.
-- **Custom configs page.** Capsule tabs without extra background or line, equal-height *Add config* (green) and *New tab* (dark pink) buttons, no duplicate “Saved configs” title, no fixed 560 px table width (long names, ports and the three-dot button stay inside the window; domains wrap under the type/ping badges), and a full-width *Test all* card under the table with icon, hint and assistant button.
+- **Custom configs page.** Capsule tabs without extra background or line, equal-height *Add config* (green) and *New tab* (dark pink) buttons, no duplicate “Saved configs” title, no fixed 560 px table width (long names, ports and the three-dot button stay inside the window; domains wrap under the type/ping badges), and a full-width *Test all* card under the table with icon and hint.
 - **RTL and language.** Picker arrows point left in RTL; the “Exit country” hint sits under the whole row; technical names (Aether, Tor, MASQUE×2) stay English; *Link or text*, *Import file* and *Name* are translated; technical strings in inputs keep LTR order.
-- **Drawer and Gemini.** Triangular logo removed from the drawer header, uniform group spacing; Gemini icons use the `#9B8CFF` token and sit in the title row.
+- **Drawer.** Triangular logo removed from the drawer header, uniform group spacing.
 - **Modal fix.** Escape now closes only the modal and no longer also leaves the sub-page.
 
 Limits: checked with Chromium (layout and a new DOM/geometry parity test) and a test IPC, not in WebView2 on Windows; pixel-exact parity is not claimed. See `docs/UI_PARITY_1.4.0.fa.md` and `docs/UIUX_1.4.0_REPORT.fa.md`.

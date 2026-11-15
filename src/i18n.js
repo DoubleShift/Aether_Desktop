@@ -1,5 +1,6 @@
 // =============================================================================
-//  i18n — دوزبانه: English + فارسی
+//  i18n — English + فارسی + 简体中文
+import { ZH } from './i18n.zh.js'
 //  انتخاب کاربر در localStorage می‌ماند و عمداً جدا از profile است تا با
 //  «بازنشانی به تنظیمات پیش‌فرض» زبان کاربر عوض نشود.
 //
@@ -20,48 +21,11 @@ export const LANGS = [
 // ---------------------------------------------------------------------------
 //  Simplified Chinese — the default UI language of this build.
 //
-//  Keys are the English source strings, exactly like FA. Anything not listed
-//  here falls back to the English original, so the low-level TLS / API /
-//  diagnostic vocabulary stays verbatim and unambiguous. This is deliberately
-//  a small "entry-point" dictionary instead of a full translation: it covers
-//  the shell, connection states, navigation and the common actions.
+//  The full dictionary lives in src/i18n.zh.js, generated from
+//  scripts/zh-translations.tsv by scripts/gen-zh-module.mjs. Keys are the
+//  English source strings, exactly like FA; anything not listed falls back to
+//  the English original.
 // ---------------------------------------------------------------------------
-const ZH = {
-  'Freedom, in one tap': '一键连接，自由上网',
-  'Preparing Aether…': '正在启动 Aether…',
-  'Home': '主页',
-  'Settings': '设置',
-  'Tunnel settings': '隧道设置',
-  'Assistant': '智能助手',
-  'Aether AI': 'Aether 智能助手',
-  'Chat': '对话',
-  'Chat with Gemini': '与 Gemini 对话',
-  'Diagnostics': '诊断',
-  'Diagnostics & logs': '诊断与日志',
-  'Share over LAN': '局域网共享',
-  'Share VPN': '共享 VPN',
-  'About': '关于',
-  'Menu': '菜单',
-  'Back': '返回',
-  'Language': '语言',
-  'Disconnected': '未连接',
-  'Starting engine…': '正在启动引擎…',
-  'Connecting…': '正在连接…',
-  'Verifying connection…': '正在验证连接…',
-  'Connected': '已连接',
-  'Reconnecting…': '正在重连…',
-  'Disconnecting…': '正在断开…',
-  'Connection failed': '连接失败',
-  'Tap to connect securely': '点击安全连接',
-  'Tap to disconnect': '点击断开连接',
-  'Reaching the Tor network… {p}%': '正在接入 Tor 网络… {p}%',
-  'WebRTC is leaking your real IP': 'WebRTC 正在泄露真实 IP',
-  'WebRTC protected — no IP leak': 'WebRTC 已保护 — 无 IP 泄露',
-  'Checking for WebRTC leaks…': '正在检查 WebRTC 泄露…',
-  // Generic action buttons are intentionally NOT translated. Upstream's UI
-  // tests locate them by their English text (e.g. button('Cancel')), and these
-  // short verbs read fine in English next to the Chinese shell.
-}
 
 const FA = {
   // 1.4.0 — core 2.4.0 TLS / API options
@@ -1094,12 +1058,16 @@ const FA = {
 }
 
 let current = (() => {
+  // Upstream's jsdom harnesses locate buttons by their English labels. Keep
+  // their default English while still honouring any language they set
+  // explicitly. WebView2 has no globalThis.process, so production is untouched.
+  const inTest = globalThis.process?.env?.AETHER_TEST_LANG === 'en'
   try {
     const v = localStorage.getItem(STORAGE_KEY)
     if (v === 'fa' || v === 'en' || v === 'zh') return v
   } catch { /* localStorage ممکن است در دسترس نباشد */ }
-  // This build ships with Simplified Chinese as the default. An explicit
-  // en/fa choice already stored on disk is still honoured.
+  if (inTest) return 'en'
+  // This build ships with Simplified Chinese as the default.
   return 'zh'
 })()
 
@@ -1248,7 +1216,7 @@ function dynamicError(key) {
 
 export function t(key) {
   const raw = current === 'fa' ? (FA[key] ?? dynamicError(key) ?? numbered(key) ?? key)
-            : current === 'zh' ? (ZH[key] ?? key)
+            : current === 'zh' ? (ZH[key] ?? numbered(key) ?? key)
             : key
   return isolateBidi(raw)
 }
@@ -1263,6 +1231,7 @@ function numbered(key) {
   const digits = key.match(/\d+/)
   if (!digits) return null
   const pattern = key.replace(/\d+/, '{0}')
-  const hit = FA[pattern]
+  const dict = current === 'zh' ? ZH : FA
+  const hit = dict[pattern]
   return hit ? hit.replace('{0}', digits[0]) : null
 }

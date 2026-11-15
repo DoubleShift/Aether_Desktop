@@ -1396,13 +1396,6 @@ fn main() {
                 }
                 let mut last: Option<Arc<Snapshot>> = None;
                 let mut last_emit_at: Option<Instant> = None;
-                // >>> AETHER-APP-PATCH ai-gate-follows-tunnel (1.3.0)
-                // دروازهٔ هوش مصنوعی به حالت اتصال وابسته است ولی `aether://ai`
-                // فقط بعد از کارهای دستیار منتشر می‌شد؛ پس بعد از وصل‌شدن، چت
-                // همچنان «تونل وصل نیست» می‌گفت. با هر تغییر *حالت* یک انتشار
-                // تازه — روی رشتهٔ جدا، تا قفلِ کنترلر هرگز این تیک را نگه ندارد.
-                let mut last_gate_state: Option<state::ConnectionState> = None;
-                // <<< AETHER-APP-PATCH ai-gate-follows-tunnel
                 loop {
                     let began = Instant::now();
                     let st: State<'_, AppState> = handle.state();
@@ -1419,15 +1412,7 @@ fn main() {
                         }
                     };
                     if let Some(snapshot) = snapshot {
-                        let current_state = snapshot.state;
                         publish(&handle, &st, snapshot, &mut last, &mut last_emit_at);
-                        // >>> AETHER-APP-PATCH ai-gate-follows-tunnel
-                        if last_gate_state != Some(current_state) {
-                            last_gate_state = Some(current_state);
-                            let ai_handle = handle.clone();
-                            std::thread::spawn(move || publish_ai(&ai_handle));
-                        }
-                        // <<< AETHER-APP-PATCH ai-gate-follows-tunnel
                     }
                     // Sleep the REMAINDER of the beat. A tick that took 900ms must
                     // not then wait another 200ms before the next one.
@@ -1492,26 +1477,10 @@ fn main() {
             webrtc_leak_test,
             about_info,
             core_caps,
-            ai_snapshot,
             get_ui_lang,
             set_ui_lang,
             news_state,
             news_mark,
-            ai_set_key,
-            ai_test_key,
-            ai_select_model,
-            ai_refresh_models,
-            ai_explain,
-            ai_send_chat,
-            ai_retry,
-            ai_apply_changes,
-            ai_edit_message,
-            ai_delete_messages,
-            ai_stop,
-            ai_advise,
-            ai_clear_chat,
-            ai_dismiss_error,
-            ai_dismiss_advisor,
             zt_status,
             zt_request_code,
             zt_resend_code,

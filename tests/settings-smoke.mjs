@@ -69,7 +69,7 @@ const hubRows = view.querySelectorAll('.setrow')
 console.log('rows in hub =', hubRows.length)
 // +2: دو سوییچ «نمایش و صدا» (انیمیشن صفحهٔ اصلی، صدای اتصال) مستقیماً در هاب‌اند.
 check(hubRows.length === SETTINGS_ROWS.length + 1 + 2, 'هر ردیف + دو سوییچ نمایش‌وصدا + ردیف بازنشانی رندر شد')
-check(view.querySelectorAll('.setrow .aihint').length === hubRows.length, 'هر ردیف هاب یک ✨ دارد')
+check(view.querySelectorAll('.setrow .aihint').length === 0, 'هر ردیف هاب یک ✨ دارد')
 check(view.querySelector('.setnotice')?.hidden === false, 'با تونلِ وصل، نوار اطلاع دیده می‌شود')
 
 // مقدار فعلی باید برچسبِ خوانا باشد و نه نام داخلی.
@@ -90,7 +90,7 @@ for (const row of SETTINGS_ROWS) {
   console.log(`${row.id}: controls=${controls.length} labels=${labels.length} ✨=${hints.length}`)
   // `controlless`: زیرصفحه‌ای که فقط خواندنی است (بایگانیِ پیام‌ها) کنترلی ندارد.
   check(row.controlless || controls.length > 0, `${row.id}: کنترل‌های واقعی رندر شدند`)
-  check(hints.length === labels.length, `${row.id}: هر گزینه یک ✨ گرفت`)
+  check(hints.length === 0, `${row.id}: هیچ ✨ـای تزریق نشده است`)
   check(!!view.querySelector('.setpage__back'), `${row.id}: دکمهٔ بازگشت هست`)
   for (const c of controls) {
     const key = c.dataset.key ?? c.closest('[data-key]')?.dataset.key
@@ -128,14 +128,6 @@ await new Promise((r) => setTimeout(r, 20))
 const saved = invoked.filter(([c]) => c === 'set_profile').pop()
 check(saved?.[1]?.profile?.protocol === 'WIREGUARD', 'تغییر در زیرصفحه با set_profile ذخیره می‌شود')
 
-// ---- کلیک ✨ ردیف، زیرصفحه را باز نمی‌کند ----
-view.querySelector('.setpage__back').dispatchEvent(new dom.window.MouseEvent('click', { bubbles: true }))
-const before = view.querySelector('.sethub') !== null
-view.querySelector('.setrow .aihint').dispatchEvent(new dom.window.MouseEvent('click', { bubbles: true }))
-check(before && view.querySelector('.sethub') !== null, 'کلیک روی ✨ ردیف را باز نمی‌کند')
-check(document.querySelector('.aibubble') !== null, 'حبابِ توضیح باز شد')
-check(document.querySelector('.aibubble__body').classList.contains('is-blocked'), 'بی‌کلید، حباب پیام دروازه را می‌دهد و درخواستی نمی‌فرستد')
-check(!invoked.some(([c]) => c === 'ai_explain'), 'با دروازهٔ بسته هیچ ai_explain فرستاده نشد')
 
 console.log(failures === 0 ? '\nALL OK' : `\n${failures} FAILED`)
 process.exit(failures === 0 ? 0 : 1)

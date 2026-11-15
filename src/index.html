@@ -6,6 +6,8 @@
   <title>Aether</title>
   <link rel="stylesheet" href="styles/tokens.css" />
   <link rel="stylesheet" href="styles/app.css" />
+  <!-- chat.css also carries the shared .chat__modal styles used by the
+       custom-config dialogs, so it stays even though the AI chat is gone. -->
   <link rel="stylesheet" href="styles/chat.css" />
   <link rel="stylesheet" href="styles/mobile.css" />
   <link rel="stylesheet" href="styles/parity.css" />
@@ -18,37 +20,31 @@
        بیشینه‌سازی عمداً وجود ندارد؛ پنجره یک قاب موبایلی ۳۹۰×۸۲۰ است. -->
   <header class="winbar" data-tauri-drag-region>
     <span class="winbar__spacer" data-tauri-drag-region></span>
-    <button class="twin twin--min" type="button" aria-label="Minimize"></button>
-    <button class="twin twin--close" type="button" aria-label="Close"></button>
+    <button class="twin twin--min" type="button" aria-label="最小化"></button>
+    <button class="twin twin--close" type="button" aria-label="关闭"></button>
   </header>
 
   <!-- هدر موبایل — پورت TopAppBar نسخهٔ اندروید -->
   <header class="mobile-header" id="mobile-header">
-    <button class="mobile-header__btn mobile-header__menu" id="menu-btn" type="button" aria-label="Menu" aria-controls="drawer" aria-expanded="false"></button>
-    <button class="mobile-header__btn mobile-header__back" id="back-btn" type="button" aria-label="Back" hidden></button>
+    <button class="mobile-header__btn mobile-header__menu" id="menu-btn" type="button" aria-label="菜单" aria-controls="drawer" aria-expanded="false"></button>
+    <button class="mobile-header__btn mobile-header__back" id="back-btn" type="button" aria-label="返回" hidden></button>
     <div class="mobile-header__brand">
       <span class="mobile-header__title" id="header-title">Aether</span>
       <span class="mobile-header__tagline" id="header-tagline">一键连接，自由上网</span>
     </div>
     <span class="mobile-header__spacer"></span>
-    <button class="mobile-header__btn mobile-header__action" id="hdr-assistant" type="button" data-tab="assistant" aria-label="Assistant"></button>
-    <button class="mobile-header__btn mobile-header__action" id="hdr-tune" type="button" data-tab="tunnel" aria-label="Tunnel settings"></button>
+    <button class="mobile-header__btn mobile-header__action" id="hdr-tune" type="button" data-tab="tunnel" aria-label="隧道设置"></button>
   </header>
 
   <!-- کشوی ناوبری رویی — همان Drawer موبایل -->
   <div class="drawer__backdrop" id="drawer-backdrop" hidden></div>
-  <nav class="drawer" id="drawer" aria-label="Sections" aria-hidden="true">
+  <nav class="drawer" id="drawer" aria-label="导航" aria-hidden="true">
     <div class="drawer__head">
       <div class="drawer__brand">
         <span class="drawer__title">Aether</span>
         <span class="drawer__tagline">一键连接，自由上网</span>
       </div>
     </div>
-    <div class="drawer__group" data-group="ai">
-      <button class="drawer__item" type="button" data-tab="assistant">智能助手</button>
-      <button class="drawer__item" type="button" data-tab="chat">对话</button>
-    </div>
-    <div class="drawer__sep"></div>
     <div class="drawer__group" data-group="app">
       <button class="drawer__item" type="button" data-tab="advanced">设置</button>
       <button class="drawer__item" type="button" data-tab="diagnostics">诊断</button>
@@ -59,7 +55,7 @@
 
   <div class="shell">
     <main class="main" id="main">
-      <div id="view"><div class="boot-skeleton" role="status" aria-busy="true">Aether · در حال آماده‌سازی…</div></div>
+      <div id="view"><div class="boot-skeleton" role="status" aria-busy="true">Aether · 正在启动…</div></div>
     </main>
   </div>
 

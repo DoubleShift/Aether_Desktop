@@ -1,0 +1,825 @@
+﻿# Aether Desktop 简体中文词典数据源
+# 每行格式：英文原句|||简体中文译文
+# 键与 src/i18n.js 中 t() 的键一致（英文原句）。生成 src/i18n.zh.js 请运行：
+#   node scripts/gen-zh-module.mjs
+# 未列出的键会在界面上回退英文。
+{0} ad and tracker domains · updated {1}|||已拦截 {0} 个广告与追踪域名 · 更新于 {1}
+{0} configs imported.|||已导入 {0} 个配置。
+{0} Iranian IP ranges and {1} domains · updated {2}|||{0} 个伊朗 IP 段与 {1} 个域名 · 更新于 {2}
+{0} message(s) in the conversation|||对话中共 {0} 条消息
+{0} range(s), {1} addresses|||{0} 个网段，{1} 个地址
+{0} seconds|||{0} 秒
+{0} selected|||已选择 {0} 项
+1 config imported.|||已导入 1 个配置。
+50–5000 ms. If no confirmed candidate is within the enabled limit, keep the current server endpoint.|||取值范围 50–5000 毫秒。若在设定的上限内没有可用候选，将继续使用当前服务器地址。
+A browser set to use a proxy still sends WebRTC on its own connection, which can reveal the device\u2019s real IP. Open the setup page below on the other device: it tests WebRTC live and gives a one\u2011click lock for Chrome, Edge, Brave and Firefox. Phones: use v2rayNG / NekoBox in VPN mode with the SOCKS5 address.|||即使浏览器设置了代理，WebRTC 仍可能走自己的连接并暴露真实 IP。请在另一台设备打开下方的配置页：它会实时检测 WebRTC，并为 Chrome、Edge、Brave、Firefox 提供一键锁定。手机请使用 v2rayNG / NekoBox 的 VPN 模式并填入 SOCKS5 地址。
+A key ending in …{0} is stored.|||已保存一个以 …{0} 结尾的密钥。
+A new code is on its way. Only the newest code works.|||新验证码正在发送，只有最新的一条有效。
+A one-time code is sent to this mailbox on connect.|||连接时会向此邮箱发送一次性验证码。
+A one-time code was e-mailed to {0}. Type it here to sign in.|||一次性验证码已发送至 {0}，请在此输入以完成登录。
+A problem was detected — see the failing check|||检测到问题，请查看未通过的检查项
+A scan is already running.|||扫描正在进行中。
+About|||关于
+Accepted: the organization issued an enrolment token for this service token.|||已通过：组织已为此服务令牌签发注册令牌。
+Access email|||登录邮箱
+Account identity|||账号身份
+Add a key first.|||请先添加密钥。
+Add config|||添加配置
+Add your Gemini API key to use the assistant.|||请添加 Gemini API 密钥以使用助手。
+Address copied|||地址已复制
+Address range|||地址段
+Aether|||Aether
+Aether could not finish loading. Please restart the app.|||Aether 未能完成加载，请重启应用。
+Aether dials out through this proxy — use it to chain behind another VPN or proxy already running on this PC. Empty = direct.|||Aether 通过此代理向外连接，可用于串接本机已运行的其他 VPN 或代理。留空表示直连。
+Aether/WARP chooses its own anycast exit.|||Aether/WARP 自动选择任播出口。
+All|||全部
+All checks passed — traffic should flow|||全部检查通过，流量应可正常通行
+All details copied|||全部信息已复制
+ALPS|||ALPS
+Also reachable on these links (use the one the device is connected by)|||也可通过以下地址连接（请选择该设备实际接入网络的地址）
+An HTTP proxy cannot carry UDP, so MASQUE is switched to HTTP/2 automatically and WireGuard / WARP×2 will not pass through it. Use a SOCKS5 proxy for those.|||HTTP 代理无法承载 UDP，因此 MASQUE 会自动切换到 HTTP/2，WireGuard / WARP×2 无法通过。请改用 SOCKS5 代理。
+Analyse and tune|||分析并优化
+API address|||API 地址
+API host|||API 主机名
+API key removed|||API 密钥已移除
+API key saved.|||API 密钥已保存。
+API server name (SNI)|||API 服务器名称（SNI）
+App version|||应用版本
+Applications|||应用程序
+Applied|||已应用
+Apply|||应用
+Architecture|||系统架构
+Ask Aether AI…|||向 Aether AI 提问…
+Ask anything, or say what you want changed|||任意提问，或说明希望修改哪些设置
+Ask for a code first.|||请先获取验证码。
+Ask the assistant about this setting|||就此项设置向助手提问
+Asking for a new code\u2026|||正在获取新验证码…
+Asking your organization to e-mail a code to {0}\u2026|||正在请求组织向 {0} 发送验证码…
+Asks your organization for an enrolment token exactly as the engine will when connecting. Nothing is stored.|||按引擎连接时的相同方式向组织申请注册令牌，不会保存任何内容。
+Assistant|||智能助手
+Auto-select lowest delay|||自动选择延迟最低的节点
+Automatic (75 s)|||自动（75 秒）
+Automatic proxy (PAC) URL — easiest, fail\u2011closed|||自动代理（PAC）地址 — 最简单，故障时阻断
+Automatic reconnect attempts|||自动重连次数
+Back|||返回
+Block ads and trackers|||拦截广告与追踪
+Block browser traffic if the tunnel drops|||隧道断开时阻断浏览器流量
+Blocked destinations|||禁止访问的目标
+Blocks ad and tracker domains (HaGeZi Light list, refreshed weekly through the tunnel).|||拦截广告与追踪域名（HaGeZi Light 列表，每周通过隧道更新）。
+Bootstrap patience|||引导等待时间
+BoringSSL names separated by a colon. Empty = core default.|||BoringSSL 名称，以冒号分隔。留空使用内核默认值。
+Bridge country|||网桥所在国家
+Bridges|||网桥
+Budget {0} · timeout {1} ms · tries {2} · parallel {3}|||预算 {0} · 超时 {1} 毫秒 · 尝试 {2} 次 · 并发 {3}
+built-in copy|||内置副本
+Bypass Iranian sites|||伊朗网站直连
+Bytes of padding asked of the server, 0 to 65535. Empty = none.|||向服务器请求的填充字节数，范围 0–65535。留空表示不填充。
+Cancel|||取消
+Cancel selection|||取消选择
+Certificate checks|||证书校验
+Certificate compression|||证书压缩
+Chain|||链式连接
+Changed|||已变更
+Chat with Gemini|||与 Gemini 对话
+Checking for WebRTC leaks…|||正在检查 WebRTC 泄露…
+Checking IP…|||正在查询 IP…
+Checking real proxy ping…|||正在检测真实代理延迟…
+Checking the code\u2026|||正在校验验证码…
+Checking this device\u2019s membership\u2026|||正在检查此设备的成员资格…
+Checks the key and lists the models it may use|||校验密钥并列出可用模型
+Classic: the older WireGuard-inside-WireGuard mode.|||经典模式：较早的 WireGuard 套 WireGuard 方式。
+Clear|||清除
+Clear the conversation|||清空对话
+Clear the whole conversation?|||清空全部对话？
+Clipboard is empty.|||剪贴板为空。
+Close|||关闭
+Cloudflare issued a token that is already expired. Check that this PC\u2019s date and time are correct, then sign in again.|||Cloudflare 签发的令牌已过期。请检查本机日期与时间是否正确，然后重新登录。
+Cloudflare refused the request (HTTP {0}). Check the team name, and that this address is allowed to join.|||Cloudflare 拒绝了请求（HTTP {0}）。请检查团队名称，以及此地址是否被允许加入。
+Config|||配置
+Config tabs|||配置分组
+Connect as a managed device of a Cloudflare Zero Trust organization. Leave empty for normal WARP.|||以 Cloudflare Zero Trust 组织的受管设备身份连接。留空则使用普通 WARP。
+Connect the VPN first — sharing routes other devices through this PC’s tunnel.|||请先连接 VPN —— 共享功能会把其他设备的流量导入本机隧道。
+Connect this PC to your home Wi\u2011Fi or wired network. The addresses appear here automatically.|||请将本机连接到家庭 Wi‑Fi 或有线网络，地址会自动显示在这里。
+Connected|||已连接
+Connected for|||已连接时长
+Connecting…|||正在连接…
+Connection failed|||连接失败
+Connection profiles|||连接配置
+Copied|||已复制
+Copy|||复制
+Copy all details|||复制全部信息
+Copy answer|||复制回答
+Copy link|||复制链接
+Copy logs|||复制日志
+Core|||内核
+Core version|||内核版本
+Could not copy — your system refused clipboard access.|||复制失败 —— 系统拒绝了剪贴板访问。
+Could not reach {0} ({1}). Check the connection and try again. If Cloudflare is only reachable through your upstream proxy, skip signing in here: the code asked for while connecting goes through that proxy.|||无法连接 {0}（{1}）。请检查网络后重试。如果只能通过上游代理访问 Cloudflare，请跳过此处登录：连接时所需的验证码会经由该代理获取。
+Could not read the clipboard — paste with Ctrl+V.|||无法读取剪贴板，请用 Ctrl+V 粘贴。
+Credentials saved|||凭据已保存
+Credits, links & what this build adds|||致谢、相关链接与本次改版内容
+Custom Cloudflare IP ranges|||自定义 Cloudflare IP 段
+Custom MTU|||自定义 MTU
+Custom ranges are on but no valid range is entered. Add a range or turn the option off.|||已启用自定义网段，但未填写有效网段。请添加网段或关闭此选项。
+Default|||默认
+Default · highest daily limit, best for continuous everyday use|||默认 · 每日额度最高，适合日常长时间使用
+Default on for all six built-in modes. Turning off skips optional initial connection checks, not engine startup, Tor bootstrap, exit-IP lookup or ongoing health monitoring.|||六种内置模式默认开启。关闭后仅跳过可选的初始连接检查，不影响引擎启动、Tor 引导、出口 IP 查询及持续健康监测。
+Delete|||删除
+Delete {0} message(s)?|||删除 {0} 条消息？
+Delete all|||全部删除
+Delete all configs|||删除全部配置
+Delete all configs?|||删除全部配置？
+Delete profile|||删除配置档案
+Delete selected|||删除所选
+Delete tab|||删除分组
+Delete this config?|||删除此配置？
+Deletes the saved membership for this team only. The next connect joins again. Use it after your organization removed this device, or to join as someone else.|||仅删除此团队保存的成员资格，下次连接会重新加入。适用于组织已移除此设备，或需要换身份加入的情况。
+Deletes the saved sign-in from this PC. A membership this device already has is not affected.|||删除本机保存的登录信息，不会影响此设备已拥有的成员资格。
+Diagnostics|||诊断
+Did not understand? Ask the assistant|||没看懂？向助手提问
+Direct destinations|||直连目标
+Disable extension permutation|||禁用扩展重排
+Disable GREASE|||禁用 GREASE
+Disable OCSP stapling|||禁用 OCSP 装订
+Disable SCT|||禁用 SCT
+Disable session tickets|||禁用会话票据
+Disconnect and finish any active ping test before scanning.|||扫描前请先断开连接，并等待正在进行的延迟测试结束。
+Disconnect first: the running tunnel is using this membership.|||请先断开连接：当前隧道正在使用此成员资格。
+Disconnect to sign in or to change the membership.|||请断开连接后再登录或更换成员资格。
+Disconnected|||未连接
+Disconnecting…|||正在断开…
+Discover models for this key|||查询此密钥可用的模型
+Dismiss|||关闭
+Dotted IDs separated by a colon. Empty = none.|||以点分 ID 表示，用冒号分隔。留空表示不使用。
+Double chain|||双跳链
+Download / upload speed test|||下载 / 上传测速
+ECH GREASE|||ECH GREASE
+ECHConfigList (base64, optional)|||ECHConfigList（base64，可选）
+Edit|||编辑
+Edit config|||编辑配置
+Edit message|||编辑消息
+Edit tab|||编辑分组
+edited|||已编辑
+Encrypted Client Hello|||加密客户端问候
+Endpoint|||服务器地址
+Enter 50–5000 ms. The last valid saved limit remains in use until a valid value is entered.|||请输入 50–5000 毫秒。在输入有效值之前，继续使用上一次保存的有效上限。
+Enter both the client ID and the client secret first.|||请先填写客户端 ID 和客户端密钥。
+Enter on the other device (same Wi\u2011Fi)|||在另一台设备输入（同一 Wi‑Fi）
+Enter the team name above to sign in or to see whether this device is already a member.|||请在上方填写团队名称以登录，或查看此设备是否已是成员。
+Enter your login code|||输入登录验证码
+Enter your work e-mail above first.|||请先在上方填写工作邮箱。
+Environment check|||环境检查
+Ethernet address|||以太网地址
+Every imported config is removed from this PC. This cannot be undone.|||本机所有已导入配置都将被删除，此操作不可撤销。
+Every setting goes back to its default, including endpoint ranges, routing rules and enrolment details.|||所有设置恢复默认值，包括服务器网段、路由规则和注册信息。
+Everything after this message will be removed and the assistant will answer the edited question.|||此消息之后的内容将被移除，助手会重新回答修改后的提问。
+Everything the other device sends through the share leaves via the VPN tunnel only: DNS is resolved inside the tunnel, UDP is relayed through it, local/private targets are blocked, and if the tunnel drops, connections fail instead of going direct.|||其他设备通过共享发出的全部流量只经 VPN 隧道：DNS 在隧道内解析，UDP 由隧道转发，本地/私网目标被阻断；隧道断开时连接直接失败而不会走直连。
+Excellent|||极佳
+Exit country|||出口国家
+Expired|||已过期
+Expired on {0}|||已于 {0} 过期
+Expires on {0}|||有效期至 {0}
+Explain this more simply: “{0}”. This is what the app told me: {1}|||请更通俗地解释：“{0}”。应用给出的提示是：{1}
+Export selected profile (non-secret)|||导出所选配置档案（不含密钥）
+Fair|||一般
+file could not be read|||无法读取文件
+file is larger than 2 MB|||文件超过 2 MB
+Fixed to MASQUE over HTTP/2 in this mode. Tor carries TCP only and WARP\u2019s WireGuard endpoints answer on UDP alone, so the engine refuses WireGuard and WARP\u00d72 here.|||此模式固定使用 HTTP/2 上的 MASQUE。Tor 仅承载 TCP，而 WARP 的 WireGuard 端点只响应 UDP，因此引擎在此模式下拒绝 WireGuard 与 WARP×2。
+Flash-Lite family · high daily limit (alias/preview build)|||Flash-Lite 系列 · 每日额度较高（别名/预览版本）
+Forget|||忘记
+Forget this sign-in|||清除此登录信息
+Freedom, in one tap|||一键连接，自由上网
+Gateway proxy|||网关代理
+Gemini API key|||Gemini API 密钥
+Generate a new password|||生成新密码
+Get a free key from Google AI Studio|||从 Google AI Studio 获取免费密钥
+Good|||良好
+Google failed on its own side. This is not your connection — try again.|||Google 服务端出错，与你的连接无关，请重试。
+Google rejected this key. Check it in AI Studio, or paste it again.|||Google 拒绝了此密钥。请在 AI Studio 中核对，或重新粘贴。
+Google sent back something this app could not read.|||Google 返回了应用无法解析的内容。
+Gool mode|||Gool 模式
+Got it|||知道了
+GREASE signature algorithm|||GREASE 签名算法
+Groups in order. Empty = core default.|||按顺序填写组名。留空使用内核默认值。
+Groups that get a key share; each must be one of the TLS groups. Empty = Chrome default.|||参与密钥共享的组，每组必须是 TLS 组之一。留空使用 Chrome 默认值。
+h|||时
+Health interval|||健康检查间隔
+Helps on networks that block HTTP/3|||适用于阻断 HTTP/3 的网络
+Hi, I am Aether AI|||你好，我是 Aether AI
+Hide|||隐藏
+Hide the destination name (SNI) from DPI|||对深度包检测隐藏目标名称（SNI）
+Hold the gateway certificate to the pins the core carries. Always on with Zero Trust.|||将网关证书与内核内置的证书固定值比对。使用 Zero Trust 时始终开启。
+How hard the clean-IP scanner works, for both single and group scans.|||干净 IP 扫描器的工作强度，对单个扫描和分组扫描均生效。
+How long Tor tries the direct path before falling back to bridges. Shorten it where Tor is definitely blocked.|||Tor 在改用网桥前尝试直连的时长。在明确阻断 Tor 的网络中可缩短此值。
+How to connect|||如何连接
+How Tor reaches the network when it is blocked.|||Tor 被阻断时接入网络的方式。
+HTTP proxy — enter in system proxy settings|||HTTP 代理 —— 填入系统代理设置
+I can explain any setting in this app, read this session’s log and propose tuning, or just answer a question.|||我可以解释应用中的任何设置、阅读本次会话日志并给出优化建议，也可以回答一般问题。
+If Cloudflare stops accepting the saved device, register a fresh one instead of handshaking a tunnel that carries no traffic|||若 Cloudflare 不再接受已保存的设备，则重新注册设备，而不是建立一条没有流量的隧道
+Import a config first, then pick it in the list.|||请先导入配置，再从列表中选择。
+Import file|||导入文件
+Import is too large|||导入内容过大
+Import now|||立即导入
+Import settings|||导入设置
+In its Wi\u2011Fi / network settings choose Proxy → Automatic and paste the PAC URL (or Manual with the HTTP proxy). For apps and TUN clients (v2rayN, NekoBox, sing\u2011box) use the SOCKS5 address with remote DNS.|||在该设备的 Wi‑Fi / 网络设置中选择「代理 → 自动」并粘贴 PAC 地址（或选择「手动」填入 HTTP 代理）。应用与 TUN 客户端（v2rayN、NekoBox、sing‑box）请使用 SOCKS5 地址并启用远程 DNS。
+In-tunnel DNS servers|||隧道内 DNS 服务器
+Invalid or non-public entry: {0}|||无效或非公网地址：{0}
+IP ranges|||IP 网段
+IP unavailable|||无法获取 IP
+IP version|||IP 版本
+IPv6 leak protection|||IPv6 泄露防护
+Iranian sites (.ir and Iranian IP ranges) open directly on this Windows PC only; shared devices stay in the tunnel.|||仅在这台 Windows 电脑上，伊朗站点（.ir 域名与伊朗 IP 段）直连；共享设备仍走隧道。
+Keep one fixed order of the extensions instead of Chrome\|||为扩展保持固定顺序，而不是 Chrome 的每次握手随机排列
+Keep the IPv6 default route protected or block it safely|||保护 IPv6 默认路由，或安全地将其阻断
+Keepalive|||保活间隔
+Key shares|||密钥共享组
+Kill switch|||断线保护
+Language|||语言
+Latency|||延迟
+Leave empty to let the engine fetch one. Paste a base64 ECHConfigList to use it instead — useful where fetching the default one is what your network blocks. Naming a different domain, as v2rayNG does, needs an engine change and is not possible here.|||留空由引擎自动获取。也可粘贴 base64 格式的 ECHConfigList 直接使用 —— 适用于网络恰好阻断默认获取的情况。像 v2rayNG 那样指定其他域名需要修改引擎，此处不支持。
+Leave out the GREASE values Chrome sends.|||不发送 Chrome 通常会带的 GREASE 值。
+Leave out the session_ticket extension.|||不发送 session_ticket 扩展。
+Leave out the signed_certificate_timestamp extension.|||不发送 signed_certificate_timestamp 扩展。
+Leave out the status_request extension.|||不发送 status_request 扩展。
+Let other devices on your network use this tunnel|||让局域网内其他设备使用此隧道
+Link or text|||链接或文本
+Locked|||已锁定
+Log|||日志
+Login code|||登录验证码
+Logs copied to clipboard|||日志已复制到剪贴板
+Make sure the other device is on the same Wi\u2011Fi (or wired network) as this PC.|||请确认另一台设备与本机处于同一 Wi‑Fi（或有线网络）。
+MASQUE over HTTP/2|||基于 HTTP/2 的 MASQUE
+MASQUE server name|||MASQUE 服务器名称
+Match domain rules by real host name|||按真实主机名匹配域名规则
+Maximum allowed ping (ms)|||允许的最大延迟（毫秒）
+Measuring real throughput…|||正在测量实际吞吐量…
+Measuring…|||正在测量…
+Membership|||成员资格
+Membership removed. The next connect joins again.|||成员资格已移除，下次连接会重新加入。
+Menu|||菜单
+min|||分
+Model: {0}|||模型：{0}
+Modern: WireGuard inside MASQUE, the core 2.4.0 default.|||现代模式：MASQUE 内封装 WireGuard，为内核 2.4.0 的默认方式。
+Move to tab|||移动到分组
+Name|||名称
+Names separated by a colon. Empty = Chrome default.|||名称以冒号分隔。留空使用 Chrome 默认值。
+Network backend|||网络后端
+New code possible in {0} seconds|||{0} 秒后可获取新验证码
+New proxy password generated|||已生成新的代理密码
+New tab|||新建分组
+No configs yet.|||暂无配置。
+No key stored.|||尚未保存密钥。
+No logs yet. Connect or run a test.|||暂无日志。请先连接或运行测试。
+No model has been discovered for this key yet.|||尚未查询到此密钥可用的模型。
+No models discovered yet.|||尚未发现可用模型。
+No response|||无响应
+No scannable config here. Locked, expired or incompatible configs are skipped.|||此处没有可扫描的配置。已锁定、已过期或不兼容的配置会被跳过。
+No throughput result; endpoint or proxy unavailable|||无法取得测速结果：服务器或代理不可用
+Noize|||Noize 混淆
+Not a member yet. The next connect joins with the enrolment token above.|||尚未成为成员。下次连接将使用上方注册令牌加入。
+Not a member yet. The next connect joins with the service token above, without you.|||尚未成为成员。下次连接将使用上方服务令牌自动加入，无需人工登录。
+Not accepted (HTTP {0}). Check the client ID and secret, and that the service token is allowed to enrol devices (Service Auth).|||未通过（HTTP {0}）。请检查客户端 ID 与密钥，并确认该服务令牌具备注册设备权限（Service Auth）。
+Not needed in this mode: Tor is dialled through the Aether tunnel, so the network you are on never sees it.|||此模式无需设置：Tor 通过 Aether 隧道连接，当前网络完全看不到 Tor。
+Not now|||暂不
+Not signed in yet. Sign in now and the connect will not stop to ask for a code. If you skip this, the code is asked for while connecting.|||尚未登录。现在登录，连接时就不会停下来索取验证码；若跳过，连接过程中会要求输入验证码。
+Not working: {0}|||不可用：{0}
+Nothing needed changing.|||无需修改。
+Off|||关
+Off keeps the original order of the tab.|||关闭时保持分组原有顺序。
+Off: Aether runs exactly as before. On: the next connection runs the chain below.|||关闭：Aether 按原方式运行。开启：下次连接按下方链路运行。
+Offline|||离线
+On|||开
+On: take the first stable IP within the limit. Off: choose the lowest stable real ping among the tested candidates.|||开启：取上限内第一个稳定 IP。关闭：在已测候选中选择真实延迟最低且稳定的一个。
+On: the scanner looks for a clean IP only inside the ranges entered below instead of the built-in Cloudflare ranges.|||开启：扫描器仅在下方填写的网段内寻找干净 IP，而不使用内置 Cloudflare 网段。
+One executable name per line.|||每行填写一个可执行文件名称。
+One per line, in the format bridges.torproject.org hands out. Leave empty to use the bridges the app fetches for your country. A line naming a transport the app does not ship is ignored.|||每行一条，格式与 bridges.torproject.org 提供的一致。留空则使用应用按所在国家获取的网桥。填写了应用未内置传输插件的行会被忽略。
+One per line: CIDR (104.16.0.0/20), single IP (104.16.1.5) or range (104.16.1.1-104.16.1.80). Public IPv4 only.|||每行一条：CIDR（104.16.0.0/20）、单个 IP（104.16.1.5）或区间（104.16.1.1-104.16.1.80）。仅支持公网 IPv4。
+One rule per line — domain, IP or CIDR. These connections are refused.|||每行一条规则 —— 域名、IP 或 CIDR。匹配的连接将被拒绝。
+One rule per line. These bypass the tunnel — for banking apps, LAN services and domestic sites.|||每行一条规则。匹配的目标不走隧道 —— 适用于网银应用、局域网服务和境内网站。
+Only fast Flash-class models are offered: they answer on a free key.|||仅提供快速的 Flash 系列模型：免费密钥即可使用。
+Only reuse a fast endpoint|||仅复用快速服务器地址
+Only skips the initial check; core startup and health monitoring stay enabled.|||仅跳过初始检查；内核启动与健康监测仍然启用。
+Only traffic sent to the share is protected. A device or app that is not set to use it goes out on its own connection — a shared proxy cannot force other devices through the VPN.|||只有发往共享代理的流量受保护。未配置使用该代理的设备或应用仍走自己的连接 —— 共享代理无法强制其他设备走 VPN。
+Open the chat|||打开对话
+Open the check page below in a browser: it only loads when the device is protected.|||在浏览器中打开下方检测页：只有设备已受保护时页面才会加载。
+Opens a local proxy that devices on the same Wi\u2011Fi or wired network can use|||开启一个本地代理，供同一 Wi‑Fi 或有线网络内的设备使用
+Optional — recommended on shared or public Wi\u2011Fi. Devices must sign in before using the share.|||可选项 —— 建议在共享或公共 Wi‑Fi 下启用。设备需先登录才能使用共享。
+Options are locked while a scan runs.|||扫描期间选项不可用。
+Original project — Cluvex Studio|||原项目 —— Cluvex Studio
+Own bridge lines|||自定义网桥
+Packet fragmentation|||数据包分片
+Password|||密码
+Password must be at least {0} Latin characters.|||密码至少需要 {0} 个拉丁字符。
+Paste a link or config first.|||请先粘贴链接或配置。
+Paste from clipboard|||从剪贴板粘贴
+Paste one or more links, a JSON config or a subscription address|||粘贴一个或多个链接、JSON 配置或订阅地址
+PC IP address|||本机 IP 地址
+Peer address|||对端地址
+Ping strength|||延迟质量
+Poor|||较差
+Ports 10810/10811 are used by another app on this PC. Close it and toggle sharing again.|||端口 10810/10811 已被本机其他程序占用。请关闭该程序后重新开启共享。
+Preparing Aether…|||正在启动 Aether…
+Probes public Cloudflare edges: up to 1 MB per healthy candidate, potentially hundreds of MB (data charges may apply). Edge results are preliminary; applying to a server requires real proxy ping plus 3 stability checks. Disconnect first. Locked and incompatible servers cannot be changed.|||探测 Cloudflare 公网边缘节点：每个可用候选最多 1 MB，累计可能达数百 MB（可能产生流量费用）。边缘结果仅为初步参考；应用到服务器还需真实代理延迟与 3 次稳定性检查。请先断开连接。已锁定或不兼容的服务器无法修改。
+Profile exported without secrets.|||配置档案已导出（不含密钥）。
+Proposed settings ({0})|||建议修改的设置（{0}）
+Protection check page|||保护检测页
+Protocol|||协议
+Proxy address|||代理地址
+Proxy password|||代理密码
+Proxy username|||代理用户名
+Psiphon treats this as a hard region filter. If it cannot establish there, the app retries automatically with an automatic exit.|||Psiphon 会将此作为强制地区限制。若该地区无法建立连接，应用会自动改用自动出口重试。
+Put a GREASE value first among the signature algorithms, as Chrome does.|||像 Chrome 一样，在签名算法列表首位放入 GREASE 值。
+QR from image|||从图片识别二维码
+Quick reconnect|||快速重连
+Quick reconnect skips the scan for the last endpoint that worked. With this on it is also checked for speed, and a slow one is replaced by a fresh scan instead of halving your download and upload for the whole session.|||快速重连会跳过对上次可用地址的扫描。开启此项后还会检测其速度，若过慢则重新扫描，避免整个会话期间上下行速度减半。
+Reachability check|||连通性检查
+Reaching the Tor network… {p}%|||正在接入 Tor 网络… {p}%
+Reads the name from the first bytes (TLS SNI or HTTP Host), so domain rules keep working even though Windows hands the tunnel an IP address|||从数据流前几个字节读取名称（TLS SNI 或 HTTP Host），因此即使 Windows 交给隧道的是 IP 地址，域名规则依然生效
+Reads the recent connection log — with addresses masked and identifiers removed — and changes at most one or two transport settings.|||读取最近的连接日志（地址已遮盖、标识已移除），最多调整一到两项传输设置。
+Real delay: a request through each config|||真实延迟：逐个配置发起请求
+Reconnect instantly after a drop|||断开后立即重连
+Reconnecting…|||正在重连…
+Refresh|||刷新
+Refused by the app|||被应用拒绝
+Release notes and guide for the current version.|||当前版本的更新说明与使用指南。
+Remove|||移除
+Remove the membership?|||移除成员资格？
+Remove this device\u2019s membership|||移除此设备的成员资格
+Removes every imported config from this PC.|||删除本机所有已导入配置。
+Rename|||重命名
+Rename profile|||重命名配置档案
+Replace a refused identity|||更换被拒绝的身份
+Require username & password|||需要用户名与密码
+Reset all settings to defaults|||将所有设置恢复为默认值
+Reset every setting to its default?|||将所有设置恢复为默认值？
+Resolvers used inside the tunnel. Empty = engine defaults.|||隧道内使用的 DNS 服务器。留空使用引擎默认值。
+Retry|||重试
+Route HTTP/HTTPS through your organization\|||将 HTTP/HTTPS 流量经由组织的网关转发
+Routing rules|||路由规则
+Run test|||运行测试
+Run the test to verify connectivity|||运行测试以验证连通性
+Running…|||正在运行…
+s|||秒
+Safe range: 1280 to 9000 bytes. Lower it if connections stall.|||安全范围 1280–9000 字节。若连接经常卡住，可适当调低。
+Save|||保存
+Save current settings as a new profile|||将当前设置另存为配置档案
+Saved for the next connection|||已保存，下次连接生效
+Scan / change clean IP|||扫描 / 更换干净 IP
+Scan clean IP|||扫描干净 IP
+Scan depth|||扫描深度
+Scan mode|||扫描模式
+Scan tab|||扫描此分组
+Scanning Cloudflare IPs…|||正在扫描 Cloudflare IP…
+Scanning server {0} of {1}|||正在扫描第 {0} / {1} 个服务器
+Search country|||搜索国家
+Select all|||全选
+Send|||发送
+Send a GREASE ECH extension when no ECH key is offered.|||未提供 ECH 密钥时发送 GREASE ECH 扩展。
+Send a new code|||发送新验证码
+Send again|||重新发送
+Send code|||发送验证码
+Send the calls to the WARP API to this IP or name instead of the default. Empty = default.|||将 WARP API 请求发往此 IP 或域名，而非默认地址。留空使用默认值。
+Server actions|||服务器操作
+Server IP|||服务器 IP
+Server names (SNI)|||服务器名称（SNI）
+Server padding (bytes)|||服务器填充（字节）
+Setup page + WebRTC test (open on the other device)|||配置页 + WebRTC 检测（在另一台设备打开）
+Share on this network|||在此网络共享
+Share over LAN|||局域网共享
+Share username & password|||共享用户名与密码
+Share VPN|||共享 VPN
+Sharing live · {0} connection(s)|||共享中 · {0} 个连接
+Show|||显示
+Sign in|||登录
+Sign in again|||重新登录
+Sign in at https://{0}.cloudflareaccess.com/warp in a browser, then copy the value that follows token= and paste it here. Or pick E-mail code above to sign in inside the app instead.|||在浏览器打开 https://{0}.cloudflareaccess.com/warp 登录，复制 token= 后面的值并粘贴到此处。也可以选择上方的「邮箱验证码」在应用内登录。
+Sign in to {0}|||登录到 {0}
+Sign-in forgotten.|||登录信息已清除。
+Sign-in method|||登录方式
+Signature algorithms|||签名算法
+Signed in as {0}. The next connect joins this device without asking for a code.|||已以 {0} 身份登录。下次连接将直接加入，无需验证码。
+Signed in, but this PC could not store the result securely, so nothing was saved.|||登录成功，但本机无法安全保存结果，因此未保存任何信息。
+Signed in. Connect now to join the organization.|||登录成功。现在连接即可加入组织。
+Single · the config alone|||单跳 · 仅使用该配置
+Smart lists|||智能列表
+Smart tries the protocols one by one, starting with the one most likely to work on this network, and keeps the first one that passes the self-test.|||智能模式会逐个尝试协议，从当前网络最可能成功的方式开始，并保留第一个通过自检的协议。
+SOCKS5 proxy — for apps that support SOCKS|||SOCKS5 代理 —— 供支持 SOCKS 的应用使用
+SOCKS5 with UDP support carries every protocol: MASQUE, WireGuard and WARP×2.|||支持 UDP 的 SOCKS5 可承载所有协议：MASQUE、WireGuard 与 WARP×2。
+Something went wrong.|||出现了问题。
+Sort servers by ping|||按延迟排序服务器
+Split tunneling|||分流隧道
+Splits the handshake to evade filtering|||拆分握手以规避流量过滤
+Standard names separated by a colon, in order. Empty = Chrome default.|||标准名称按顺序以冒号分隔。留空使用 Chrome 默认值。
+Start test|||开始测试
+Starting engine…|||正在启动引擎…
+Starting sharing… if this takes more than a few seconds, toggle the switch off and on again.|||正在启动共享… 若超过几秒仍未完成，请关闭开关后重新打开。
+Stop|||停止
+Stored in memory only — never written to disk.|||仅保存在内存中，不会写入磁盘。
+Subscription sources|||订阅来源
+Switch the connection to Aether → Psiphon: Google refuses the Cloudflare WARP addresses that Aether alone exits from.|||请将连接切换为 Aether → Psiphon：Google 会拒绝仅由 Aether 出口的 Cloudflare WARP 地址。
+Tap to connect securely|||点击安全连接
+Tap to disconnect|||点击断开连接
+Team name|||团队名称
+Test all|||测试全部
+Test ping|||测试延迟
+Test the API connection|||测试 API 连接
+Test the service token|||测试服务令牌
+Testing connectivity…|||正在测试连通性…
+Testing for WebRTC leaks…|||正在检测 WebRTC 泄露…
+Testing…|||正在测试…
+Testing\u2026|||正在测试…
+That code was not accepted either. Ask for a new code and try again.|||该验证码同样未被接受。请获取新验证码后重试。
+That code was not accepted. Attempt {0} of {1}.|||验证码未被接受。第 {0} / {1} 次尝试。
+That e-mail address is not complete.|||邮箱地址不完整。
+That is not a proxy address Aether can use. Expected socks5://host:port or http://host:port — the port is required.|||这不是 Aether 可用的代理地址。应形如 socks5://主机:端口 或 http://主机:端口 —— 端口必填。
+That team name is not valid. Use just the name, for example acme.|||团队名称无效。请只填写名称，例如 acme。
+The address Tor must reach before the bootstrap counts as working. Change it only if bootstrap keeps failing on a Tor that seems fine \u2014 the default target is itself blocked on some networks.|||Tor 引导被视为成功前必须连通的地址。仅当 Tor 看似正常却持续引导失败时才修改 —— 部分网络会阻断默认目标地址。
+The answer was cut off before it finished.|||回答在完成前被截断。
+The assistant is not available right now.|||助手当前不可用。
+The assistant needs the tunnel to be connected — Google is not reachable otherwise.|||助手需要隧道处于连接状态，否则无法访问 Google。
+The code was sent, but Cloudflare\u2019s answer lacked what the sign-in needs. Try again; if it keeps happening, the sign-in page has changed.|||验证码已发送，但 Cloudflare 的响应缺少登录所需信息。请重试；若反复出现，可能是登录页面已变更。
+The connection is waiting for this. It gives up after {0} seconds.|||连接正在等待此项，{0} 秒后将放弃。
+The core engine powering this app|||驱动本应用的核心引擎
+The free quota for this key is used up for now. Try again later.|||此密钥的免费额度已用尽，请稍后重试。
+The HTTP host of those API calls.|||这些 API 调用使用的 HTTP 主机名。
+The key is stored sealed on this PC with Windows DPAPI and is never written to the log.|||密钥通过 Windows DPAPI 加密保存在本机，绝不会写入日志。
+The model returned no answer.|||模型未返回任何回答。
+The name the MASQUE handshakes put in their ClientHello. Empty = core default.|||MASQUE 握手在 ClientHello 中使用的名称。留空使用内核默认值。
+The native Windows desktop edition of Aether — what we upgraded in this build|||Aether 的原生 Windows 桌面版 —— 本次改版内容
+The new settings are stored, but the tunnel is already running with the old ones. Tunnel settings are handed to the engine when it starts, so disconnect and connect again for them to take effect.|||新设置已保存，但隧道仍按旧设置运行。隧道参数在引擎启动时下发，请断开后重新连接以生效。
+The other device must sign in to the proxy with these:|||另一台设备需使用以下信息登录代理：
+The request failed.|||请求失败。
+The request never reached Google. Check the tunnel and try again.|||请求未能到达 Google。请检查隧道后重试。
+The saved sign-in is for {0} in team {1}, not the address and team above. It will not be used: sign in again.|||已保存的登录信息属于团队 {1} 的 {0}，与上方填写的邮箱和团队不符，将不会被使用，请重新登录。
+The server name the ClientHello of those API calls sends.|||这些 API 调用的 ClientHello 所发送的服务器名称。
+The sign-in carries no expiry date.|||此登录信息没有有效期。
+The sign-in expires in under a minute.|||此登录信息将在一分钟内过期。
+The sign-in is valid for {0} more day(s).|||此登录信息还有 {0} 天有效期。
+The sign-in is valid for {0} more hour(s).|||此登录信息还有 {0} 小时有效期。
+The sign-in is valid for {0} more minute(s): connect before then.|||此登录信息还有 {0} 分钟有效期，请在此之前连接。
+The TLS and API options need engine core 2.4.0 or newer. The bundled core is older, so they are disabled.|||TLS 与 API 选项需要 2.4.0 及以上内核。内置内核版本较低，因此已禁用。
+The Tor modes need engine core 2.0.0 or newer. The bundled core is older, so they are disabled.|||Tor 模式需要 2.0.0 及以上内核。内置内核版本较低，因此已禁用。
+The tunnel is running. Changes are saved now and handed to the engine the next time it starts — reconnect to apply them.|||隧道正在运行。修改已保存，将在引擎下次启动时下发 —— 请重新连接以生效。
+The upstream proxy, host-name routing and identity replacement need engine core 1.7.0 or newer. The bundled core is older, so they are disabled.|||上游代理、主机名路由与身份替换需要 1.7.0 及以上内核。内置内核版本较低，因此已禁用。
+There is no WARP tunnel in this mode: Tor carries the traffic by itself, so the protocol, scan mode and IP version are not used.|||此模式没有 WARP 隧道：流量完全由 Tor 承载，因此协议、扫描模式与 IP 版本设置不起作用。
+These features need engine core 1.5.0 or newer. The bundled core is older, so they are disabled.|||这些功能需要 1.5.0 及以上内核。内置内核版本较低，因此已禁用。
+Thinking…|||正在思考…
+This cannot be undone. Deleted messages are no longer sent to the assistant as context.|||此操作不可撤销。删除的消息将不再作为上下文发送给助手。
+This config is locked by its author.|||此配置已被作者锁定。
+This device is already a member of {0}. Connecting needs no sign-in.|||此设备已是 {0} 的成员，连接时无需登录。
+This does not look like a token. Copy the whole value that follows token= on the enrolment page.|||这看起来不是令牌。请完整复制注册页面上 token= 后面的值。
+This key cannot use the selected model. Discover the models again.|||此密钥无法使用所选模型，请重新查询可用模型。
+This npvt config is password protected.|||此 npvt 配置受密码保护。
+This organization does not offer sign-in with an e-mailed code. Ask its administrator, or use a service token or an enrolment token instead.|||该组织不提供邮箱验证码登录。请联系管理员，或改用服务令牌、注册令牌。
+This PC\u2019s saved identity in {0} is deleted, and the next connect joins the organization again as a new device. Personal WARP and other teams are not touched. This cannot be undone.|||本机在 {0} 中保存的身份将被删除，下次连接会以新设备身份重新加入组织。个人 WARP 与其他团队不受影响。此操作不可撤销。
+This tab and all its configs will be permanently deleted. All cannot be deleted.|||此分组及其全部配置将被永久删除。「全部」分组不可删除。
+This test sends synthetic data through this server only and may use approximately 10 MiB per attempt. Mobile data charges may apply. No personal files are uploaded.|||此测试仅通过该服务器发送合成数据，每次约消耗 10 MiB 流量，可能产生移动数据费用。不会上传任何个人文件。
+This token has expired. Sign in again and paste a fresh one.|||此令牌已过期。请重新登录并粘贴新的令牌。
+TLS 1.2 cipher suites|||TLS 1.2 加密套件
+TLS 1.3 cipher suites|||TLS 1.3 加密套件
+TLS fingerprint|||TLS 指纹
+TLS groups|||TLS 组
+Token looks valid but expires in under a day.|||令牌看似有效，但将在一天内过期。
+Token looks valid, expires in {0} day(s).|||令牌看似有效，{0} 天后过期。
+Token looks valid. It carries no expiry date.|||令牌看似有效，且没有有效期。
+Tor|||Tor
+Tor carries TCP only \u2014 in every app, on every platform. Aether answers DNS over TCP inside Tor and drops other UDP, so QUIC-capable apps fall back to TCP. That is normal and nothing is leaking: dropped UDP goes nowhere, least of all around Tor. Expect noticeably higher latency, and expect the first connect to take a while \u2014 Tor downloads its directory before it can build a circuit.|||Tor 在任何应用、任何平台上都只承载 TCP。Aether 在 Tor 内通过 TCP 解析 DNS 并丢弃其他 UDP，因此支持 QUIC 的应用会回退到 TCP。这是正常现象，并不存在泄露：被丢弃的 UDP 不会流向任何地方，更不会绕过 Tor。延迟会明显升高，首次连接也会较慢 —— Tor 需要先下载目录才能建立电路。
+Tor chooses its own exit node, and a new one per circuit. No setting can pin it to a country.|||Tor 自行选择出口节点，且每条电路都会更换。没有任何设置能将其固定到某个国家。
+Total|||总计
+Triple chain|||三跳链
+Trust anchor IDs|||信任锚 ID
+Try again|||重试
+Tunnel settings|||隧道设置
+Tunnel settings are handed to the engine when it starts, so these take effect on your next connect.|||隧道参数在引擎启动时下发，因此这些设置在下次连接时生效。
+Turn on sharing, and the addresses to enter on the other device appear here.|||开启共享后，需在另一台设备填写的地址会显示在这里。
+Unlock|||解锁
+Use a custom config|||使用自定义配置
+Use manual ping limit|||使用手动延迟上限
+Use my own IP ranges|||使用自定义 IP 网段
+Use this config|||使用此配置
+Use this PC as a proxy for your laptop, phone or another computer|||把这台电脑作为笔记本、手机或其他设备的代理
+Username: 1–64 Latin characters, no spaces or ":".|||用户名：1–64 个拉丁字符，不能包含空格或冒号。
+Verify connection|||验证连接
+Verify the MASQUE gateway certificate|||校验 MASQUE 网关证书
+Verifying connection…|||正在验证连接…
+Version|||版本
+Version {0}|||版本 {0}
+Very fast · reaches the free daily limit sooner|||速度很快 · 但更快触及每日免费额度
+WebRTC (real\u2011IP leak in browsers)|||WebRTC（浏览器真实 IP 泄露）
+WebRTC is leaking your real IP|||WebRTC 正在泄露真实 IP
+WebRTC leak test|||WebRTC 泄露检测
+WebRTC protected — no IP leak|||WebRTC 已保护 — 无 IP 泄露
+Where the config sits in the route. Config first: the engine dials out through it. Config last: it dials out through the engine. Changes apply at the next connection.|||配置在链路中的位置。「配置在前」：引擎通过该配置向外连接；「配置在后」：配置通过引擎向外连接。修改在下次连接时生效。
+Which country bridgedb hands out bridges for. Detection asks the network where you are, which is the request most likely to fail here.|||bridgedb 按哪个国家下发网桥。自动探测需要向网络查询所在地，这一步在此处最容易失败。
+Wi\u2011Fi address|||Wi‑Fi 地址
+Windows edition — QW-AI-Code|||Windows 版 — QW-AI-Code
+Working — {0} model(s) available through {1}|||正常 —— 通过 {1} 可用 {0} 个模型
+Wrong password for this npvt config.|||此 npvt 配置的密码不正确。
+Your IP|||你的 IP
+Your organization e-mailed a one-time code to {0}. Type it here to finish joining.|||组织已将一次性验证码发送至 {0}，请在此输入以完成加入。
+Your organization e-mailed you a one-time code. Type it here to finish joining.|||组织已向你发送一次性验证码，请在此输入以完成加入。
+Your organization e-mails a one-time code to the address above, you type it here, and the result is kept encrypted on this PC for the next connect.|||组织会向以上地址发送一次性验证码，你在此输入后，结果会加密保存在本机供下次连接使用。
+Your sign-in has expired. Sign in again before connecting, or the code is asked for while connecting.|||登录信息已过期。请在连接前重新登录，否则连接过程中会要求输入验证码。
+your-team|||你的团队
+Zero\u2011leak guard active|||防泄露保护已启用
+…or drop a .npvt, .txt, .json or .conf file on this window.|||…或把 .npvt、.txt、.json、.conf 文件拖到本窗口。
+{0} day(s) left.|||剩余 {0} 天。
+A browser set to use a proxy still sends WebRTC on its own connection, which can reveal the device’s real IP. Open the setup page below on the other device: it tests WebRTC live and gives a one‑click lock for Chrome, Edge, Brave and Firefox. Phones: use v2rayNG / NekoBox in VPN mode with the SOCKS5 address.|||即使浏览器设置了代理，WebRTC 仍可能走自己的连接并暴露真实 IP。请在另一台设备打开下方的配置页：它会实时检测 WebRTC，并为 Chrome、Edge、Brave、Firefox 提供一键锁定。手机请使用 v2rayNG / NekoBox 的 VPN 模式并填入 SOCKS5 地址。
+a real-delay test is already running|||真实延迟测试正在进行中
+Access token|||访问令牌
+Add subscription|||添加订阅
+Advanced|||高级设置
+Aether AI|||Aether 智能助手
+Aether alone exits through a Cloudflare WARP edge. Chaining Psiphon keeps Aether as the first hop and swaps the exit for an ordinary hosting IP, which is what opens sites that reject WARP ranges.|||仅 Aether 时通过 Cloudflare WARP 边缘出口。串接 Psiphon 后 Aether 仍是第一跳，出口换成普通主机 IP，从而可以打开拒绝 WARP 地址的网站。
+Aggressive|||激进
+All checks passed — tunnel is ready.|||全部检查通过，隧道已就绪。
+All except these|||除此以外的全部应用
+Always|||始终
+an edit must contain exactly one config|||编辑内容必须恰好包含一个配置
+Application|||应用
+Apps & LAN sharing|||应用与局域网共享
+Apps like Telegram ignore the system proxy; set a SOCKS5 proxy inside the app instead.|||Telegram 等应用会忽略系统代理，请在该应用内部单独设置 SOCKS5 代理。
+Ask about a setting, an error, or censorship…|||询问设置、错误或网络限制…
+Ask anything|||任意提问
+Ask anything, or say what should change|||任意提问，或说明希望修改哪些设置
+Asking for a code\u2026|||正在获取验证码…
+Asking your organization to e-mail a code to {0}…|||正在请求组织向 {0} 发送验证码…
+Automatic|||自动
+Automatic proxy (PAC) URL — easiest, fail‑closed|||自动代理（PAC）地址 — 最简单，故障时阻断
+Backend|||后端
+bad NPVS app-key block|||NPVS 应用密钥块无效
+bad NPVS cipher parameters|||NPVS 加密参数无效
+bad NPVS key|||NPVS 密钥无效
+bad NPVS sentinel encoding|||NPVS 标记编码无效
+bad npvs1 value encoding|||npvs1 值编码无效
+Balanced|||均衡
+binary NPVS files must be imported as bytes|||二进制 NPVS 文件必须按字节导入
+Both|||两者
+Both ports accept HTTP and SOCKS5 automatically — either port works in either field.|||两个端口都自动支持 HTTP 与 SOCKS5，任一端填写任意一个端口均可。
+Cancelled|||已取消
+Chat|||对话
+Checking the custom config…|||正在检查自定义配置…
+Choose file…|||选择文件…
+Classic (WireGuard)|||经典（WireGuard）
+Clean IP applied|||干净 IP 已应用
+Clean IP scan settings|||干净 IP 扫描设置
+Clean IP scanner|||干净 IP 扫描器
+Clear conversation|||清空对话
+Cloudflare did not start a code session. Try again.|||Cloudflare 未创建验证码会话，请重试。
+Cloudflare issued a token that is already expired. Check that this PC’s date and time are correct, then sign in again.|||Cloudflare 签发的令牌已过期。请检查本机日期与时间是否正确，然后重新登录。
+Cloudflare refused the request (HTTP {0}).|||Cloudflare 拒绝了请求（HTTP {0}）。
+Cloudflare returned an unusable token.|||Cloudflare 返回了不可用的令牌。
+Configs remain in All.|||配置仍保留在「全部」中。
+Connect this PC to your home Wi‑Fi or wired network. The addresses appear here automatically.|||请将本机连接到家庭 Wi‑Fi 或有线网络，地址会自动显示在这里。
+Connection|||连接
+Connection safety|||连接安全
+Connection sounds|||连接提示音
+Connection, apps, security and troubleshooting|||连接、应用、安全与故障排查
+Custom config|||自定义配置
+Custom configs|||自定义配置
+Custom configs need the bundled Xray core (engine\\xray\\xray.exe), which this installation is missing. Reinstall Aether.|||自定义配置需要内置的 Xray 内核（engine\xray\xray.exe），当前安装缺少该文件，请重新安装 Aether。
+Deep|||深度
+Default — a balanced mix of depth and speed.|||默认 —— 深度与速度的均衡取舍。
+Delete subscription?|||删除订阅？
+Detect automatically|||自动检测
+Diagnostics & logs|||诊断与日志
+Dial out through a proxy already running on this PC|||通过本机已运行的代理向外连接
+Display and sound|||显示与声音
+DNS & routing rules|||DNS 与路由规则
+Download|||下载
+Email code|||邮箱验证码
+empty input|||输入为空
+Enable sharing|||启用共享
+Encrypted Client Hello (auto)|||加密客户端问候（自动）
+Enter on the other device (same Wi‑Fi)|||在另一台设备输入（同一 Wi‑Fi）
+Enter the code from the e-mail.|||输入邮件中的验证码。
+Explain MTU and pick the best one for me|||解释 MTU 并为我选择最佳值
+Failed|||失败
+Fast|||快速
+file is not UTF-8 text|||文件不是 UTF-8 文本
+Filtered|||已过滤
+Finds a fast Cloudflare IP for Cloudflare-fronted configs and writes it into the config. Disconnect first.|||为使用 Cloudflare 前置的配置寻找快速 IP 并写入配置。请先断开连接。
+Firewall|||防火墙
+Gemini inside the app: explain, optimize and chat|||应用内的 Gemini：解释设置、优化连接并对话
+GFW|||GFW
+Home|||主页
+Home screen animations|||首页动画
+HTTPS subscription URL|||HTTPS 订阅地址
+Import|||导入
+Import QR from an image file; no camera is required.|||从图片文件导入二维码，无需摄像头。
+In its Wi‑Fi / network settings choose Proxy → Automatic and paste the PAC URL (or Manual with the HTTP proxy). For apps and TUN clients (v2rayN, NekoBox, sing‑box) use the SOCKS5 address with remote DNS.|||在该设备的 Wi‑Fi / 网络设置中选择「代理 → 自动」并粘贴 PAC 地址（或选择「手动」填入 HTTP 代理）。应用与 TUN 客户端（v2rayN、NekoBox、sing‑box）请使用 SOCKS5 地址并启用远程 DNS。
+Initial verification skipped|||已跳过初始验证
+Initial verification skipped — data path is up; health monitoring continues.|||已跳过初始验证 —— 数据通道已建立，健康监测继续进行。
+input is larger than 2 MB|||输入超过 2 MB
+Interface language|||界面语言
+invalid|||无效
+Invalid config|||配置无效
+invalid NPVO1 endpoint|||NPVO1 端点无效
+invalid NPVO1 server|||NPVO1 服务器无效
+invalid NPVS body length|||NPVS 正文长度无效
+invalid NPVS config count|||NPVS 配置数量无效
+invalid NPVS config table|||NPVS 配置表无效
+invalid NPVS content key|||NPVS 内容密钥无效
+invalid NPVS expiry|||NPVS 有效期无效
+invalid NPVS field count|||NPVS 字段数量无效
+invalid NPVS metadata|||NPVS 元数据无效
+invalid NPVS metadata length|||NPVS 元数据长度无效
+invalid NPVS NPF body|||NPVS NPF 正文无效
+invalid NPVS NPF trailer length|||NPVS NPF 尾部长度无效
+Ironclad|||坚固
+Join a Cloudflare organisation instead of plain WARP|||加入 Cloudflare 组织而非使用普通 WARP
+Keep one fixed order of the extensions instead of Chrome's per-handshake shuffle.|||为扩展保持固定顺序，而不是像 Chrome 那样每次握手随机排列。
+Kill switch & leak protection|||断线保护与泄露防护
+Light|||轻量
+link has no server address|||链接缺少服务器地址
+link has no user id|||链接缺少用户 ID
+link has no user id / password|||链接缺少用户 ID / 密码
+link has no valid port|||链接缺少有效端口
+Link, subscription or config|||链接、订阅或配置
+Live status of every part of the tunnel|||隧道各环节的实时状态
+locked configs cannot be edited|||已锁定的配置无法编辑
+locked NPVO1 files are not supported|||不支持已锁定的 NPVO1 文件
+Make sure the other device is on the same Wi‑Fi (or wired network) as this PC.|||请确认另一台设备与本机处于同一 Wi‑Fi（或有线网络）。
+Make the tunnel harder to detect|||让隧道更难被识别
+Makers, links and what changed in this version|||开发者、相关链接与本次版本更新
+Manual peer|||手动指定对端
+Manual range|||手动指定网段
+MASQUE×2|||MASQUE×2
+Messages & announcements|||消息与公告
+Model|||模型
+Modern (MASQUE)|||现代（MASQUE）
+Most thorough and slowest — use when a scan finds nothing.|||最彻底也最慢 —— 建议在扫描无结果时使用。
+Network backend, exit country, protocol and scanning|||网络后端、出口国家、协议与扫描
+New|||新建
+Next|||下一步
+No network|||无网络
+no supported config found|||未找到受支持的配置
+not an NPVO1 file|||不是 NPVO1 文件
+Not better than current|||不优于当前配置
+NPVO1 body is not a JSON object|||NPVO1 正文不是 JSON 对象
+NPVO1 credentials missing|||NPVO1 缺少凭据
+NPVO1 file has no configs array|||NPVO1 文件缺少 configs 数组
+NPVO1 file holds too many servers|||NPVO1 文件包含的服务器过多
+NPVO1 file is nested too deeply|||NPVO1 文件嵌套层级过深
+NPVO1 file is too large|||NPVO1 文件过大
+NPVO1 V2Ray profile missing|||NPVO1 缺少 V2Ray 配置
+NPVS authentication failed|||NPVS 身份验证失败
+NPVS config nesting is too deep|||NPVS 配置嵌套层级过深
+NPVS config table missing|||NPVS 配置表缺失
+NPVS configs missing|||NPVS 配置缺失
+NPVS creator signature is invalid|||NPVS 创建者签名无效
+NPVS device attestation is not supported|||不支持 NPVS 设备证明
+NPVS field is missing|||NPVS 字段缺失
+NPVS field is not UTF-8|||NPVS 字段不是 UTF-8 编码
+NPVS key derivation failed|||NPVS 密钥派生失败
+NPVS length exceeds limit|||NPVS 长度超出限制
+NPVS length overflow|||NPVS 长度溢出
+NPVS policy missing|||NPVS 策略缺失
+NPVS recipient-bound config requires its owner\'s device key|||绑定接收者的 NPVS 配置需要其所有者的设备密钥
+NPVS server is not an object|||NPVS 服务器不是对象
+npvt file could not be decrypted|||npvt 文件无法解密
+Obfuscation, endpoint, MTU and anti-DPI|||混淆、服务器地址、MTU 与抗 DPI
+Old|||旧
+One hop through the bundled Aether/WARP engine. Fastest.|||单跳，仅经过内置 Aether/WARP 引擎，速度最快。
+Only applies to the chained backend. If no server is reachable in that country, Aether falls back to an automatic exit instead of hanging.|||仅作用于链式后端。若该国家没有可连服务器，Aether 会自动回退到自动出口，不会一直卡住。
+Only listens on your local network address.|||仅监听本机局域网地址。
+Only these apps|||仅这些应用
+Opens a local proxy that devices on the same Wi‑Fi or wired network can use|||开启一个本地代理，供同一 Wi‑Fi 或有线网络内的设备使用
+Optional — recommended on shared or public Wi‑Fi. Devices must sign in before using the share.|||可选项 —— 建议在共享或公共 Wi‑Fi 下启用。设备需先登录才能使用共享。
+Options|||选项
+Other devices on the same Wi‑Fi can route their traffic through this computer. Point them at one of the addresses below.|||同一 Wi‑Fi 下的其他设备可把流量经由这台电脑转发，请让它们指向下方任一地址。
+Partial response|||部分响应
+Paste one or more share links, a full Xray JSON config, a base64 subscription, an npvt config, or a single https:// subscription address.|||粘贴一个或多个分享链接、完整的 Xray JSON 配置、base64 订阅、npvt 配置，或单个 https:// 订阅地址。
+Ping|||延迟
+Ping ceiling (ms)|||延迟上限（毫秒）
+Pipeline: {chain} (custom config chain)|||链路：{chain}（自定义配置链）
+Play a short cue when connected or disconnected.|||连接或断开时播放简短提示音。
+Port|||端口
+Profile imported and applied.|||配置档案已导入并应用。
+Psiphon (custom chain)|||Psiphon（自定义链）
+QR codes are not supported on Windows (no camera or image scanner). Use a link, a subscription or a file instead.|||Windows 版不支持二维码（无摄像头或图像扫描器）。请改用链接、订阅或文件。
+Quick and shallow — fewest candidates and shortest wait.|||快速浅扫 —— 候选最少、等待最短。
+ranges|||网段
+Reaching the Tor network…|||正在接入 Tor 网络…
+Reaching the Tor network… {0}%|||正在接入 Tor 网络… {0}%
+Rebuilding the chain…|||正在重建链路…
+Remove this device’s membership|||移除此设备的成员资格
+Rename tab|||重命名分组
+Reset|||重置
+Reset to defaults|||恢复默认值
+Resolvers inside the tunnel, block and bypass lists|||隧道内 DNS、拦截列表与直连列表
+Restores every setting above to its factory value|||将以上所有设置恢复为出厂默认值
+Route HTTP/HTTPS through your organization's Gateway (adds a hop and logs browsing)|||将 HTTP/HTTPS 流量经由组织的网关转发（增加一跳，并会记录浏览行为）
+Saved configs|||已保存的配置
+Scan|||扫描
+Scan profile, manual ping and the automatic scan for your own configs|||扫描配置、手动延迟与自有配置的自动扫描
+Scanning…|||正在扫描…
+Server / Ping|||服务器 / 延迟
+Server names, certificate checks and TLS handshake details (core 2.4.0)|||服务器名称、证书校验与 TLS 握手细节（内核 2.4.0）
+Server off|||服务器关闭
+Service token|||服务令牌
+Settings|||设置
+Sharing only works while Aether is connected.|||共享功能仅在 Aether 已连接时可用。
+Sign in before connecting|||连接前先登录
+Smart|||智能
+Smart Auto tried every strategy and none passed the self-test on this network.|||智能模式已尝试全部策略，均未通过当前网络的自检。
+Smart: racing independent connection tactics…|||智能模式：正在并行尝试多种连接方式…
+SOCKS5 port is up — bringing up the data path.|||SOCKS5 端口已就绪，正在建立数据通道。
+Something went wrong|||出现了问题
+Starting Psiphon through Tor…|||正在通过 Tor 启动 Psiphon…
+Starting Psiphon…|||正在启动 Psiphon…
+Starting the custom config…|||正在启动自定义配置…
+Starting the Psiphon stage…|||正在启动 Psiphon 阶段…
+Starting the tunnel through Tor…|||正在通过 Tor 建立隧道…
+Stealth|||隐匿
+subscription is larger than 2 MB|||订阅内容超过 2 MB
+Subscription name|||订阅名称
+subscription redirected to a non-https address|||订阅被重定向到非 HTTPS 地址
+subscription redirected too many times|||订阅重定向次数过多
+Switching to the best healthy config…|||正在切换到最佳可用配置…
+Tab options|||分组选项
+Testing configs in the active group…|||正在测试当前分组内的配置…
+That code was not accepted (HTTP {0}). Check it, or ask for a new one.|||验证码未被接受（HTTP {0}）。请核对，或获取新的验证码。
+That e-mail address is not valid.|||邮箱地址无效。
+That team name is not valid.|||团队名称无效。
+the bundled Xray core (engine\\xray\\xray.exe) is missing — reinstall Aether|||缺少内置 Xray 内核（engine\xray\xray.exe），请重新安装 Aether
+The code was sent, but Cloudflare’s answer lacked what the sign-in needs. Try again; if it keeps happening, the sign-in page has changed.|||验证码已发送，但 Cloudflare 的响应缺少登录所需信息。请重试；若反复出现，可能是登录页面已变更。
+The custom config could not start: Xray exited. Check the config, or open the diagnostics log.|||自定义配置无法启动：Xray 已退出。请检查配置，或查看诊断日志。
+The custom config did not open its local port in time (Xray). Check the config, or open the diagnostics log.|||自定义配置未能及时打开本地端口（Xray）。请检查配置，或查看诊断日志。
+The custom config opens no outbound connection. The server may be down or blocked on this network.|||自定义配置未建立任何对外连接。服务器可能已下线，或被当前网络阻断。
+The engine keeps dying — giving up after repeated restarts.|||引擎反复异常退出，多次重启后已放弃。
+The engine started but Tor never reported any progress towards the Tor network, and no pluggable transport is installed. Use the Aether → Tor mode, which builds Tor inside the tunnel.|||引擎已启动，但 Tor 始终没有报告接入进度，且未安装可插拔传输插件。请改用 Aether → Tor 模式，该模式会在隧道内部建立 Tor。
+the HTTP/2 (h2) transport was removed from Xray; ask for an XHTTP config|||Xray 已移除 HTTP/2（h2）传输方式，请改用 XHTTP 配置
+the JSON could not be read|||无法读取 JSON
+the JSON has no proxy outbound|||JSON 中没有代理出站配置
+the NPVO1 file holds no servers|||NPVO1 文件不包含任何服务器
+the QUIC transport was removed from Xray|||Xray 已移除 QUIC 传输方式
+The request thread stopped unexpectedly.|||请求线程意外终止。
+The reverse chain: Tor first, then the Aether tunnel built INSIDE it. Your exit is a WARP address \u2014 the same as plain Aether \u2014 but the network you are on sees only Tor, and cannot tell that a VPN tunnel exists at all. Use it where Cloudflare/WARP itself is blocked or throttled but Tor still gets through. Carries normal UDP, unlike the Tor-exit modes.|||反向链路：先 Tor，再在其内部建立 Aether 隧道。出口仍是 WARP 地址（与普通 Aether 相同），但当前网络只能看到 Tor，完全无法判断存在 VPN 隧道。适用于 Cloudflare/WARP 本身被阻断或限速、而 Tor 仍可用的网络。与 Tor 出口模式不同，此模式可承载常规 UDP。
+the test was interrupted|||测试被中断
+The tunnel is up, but Tor never reported any progress from inside it. Try Tor on its own, which lets Tor pick its own way to the network.|||隧道已建立，但内部的 Tor 始终没有报告任何进度。请尝试单独使用 Tor 模式，让它自行选择接入方式。
+The tunnel is up, but Tor stopped at {0}% inside it and did not reach the Tor network. Try another protocol for the tunnel, or Tor on its own with bridges.|||隧道已建立，但内部的 Tor 停在 {0}%，未能接入 Tor 网络。请尝试更换隧道协议，或单独使用带网桥的 Tor 模式。
+The tunnel started but the self-test failed.|||隧道已启动，但自检未通过。
+This custom config has expired. Import a fresh one or pick another config.|||此自定义配置已过期，请导入新配置或选择其他配置。
+This custom config is locked to mobile data by its author, so it cannot run on Windows.|||此自定义配置被作者限定为仅移动数据可用，因此无法在 Windows 上运行。
+this npvt config has expired|||此 npvt 配置已过期
+this npvt config is bound to specific devices by its author|||此 npvt 配置被作者绑定到了特定设备
+this npvt config is restricted by its author to mobile data only, which a Windows PC cannot honour|||此 npvt 配置被作者限定为仅移动数据可用，Windows 电脑无法满足该限制
+This PC’s saved identity in {0} is deleted, and the next connect joins the organization again as a new device. Personal WARP and other teams are not touched. This cannot be undone.|||本机在 {0} 中保存的身份将被删除，下次连接会以新设备身份重新加入组织。个人 WARP 与其他团队不受影响。此操作不可撤销。
+This team does not offer sign-in with an e-mail code.|||该团队不提供邮箱验证码登录。
+Thorough|||彻底
+Three hops: Tor first, then Psiphon dialled through it. Your exit IP is Psiphon\u2019s, reached from a Tor address, so sites that block Tor exit nodes open again while your own address stays behind Tor. The slowest mode.|||三跳：先 Tor，再通过它连接 Psiphon。出口 IP 属于 Psiphon，经 Tor 地址到达，因此封锁 Tor 出口节点的网站可以重新打开，而你的真实地址仍隐藏在 Tor 之后。这是最慢的模式。
+TLS fingerprint & API|||TLS 指纹与 API
+too many NPVS recipients|||NPVS 接收者过多
+Tor alone, without the Aether tunnel. Your exit is a Tor exit node and your traffic passes three relays, which is the slowest and the most private of the modes. Tor has to reach the Tor network by itself here, so it uses bridges when it is blocked.|||仅使用 Tor，不建立 Aether 隧道。出口为 Tor 出口节点，流量经过三个中继，是所有模式中最慢也最私密的一种。此模式下 Tor 需自行接入网络，被阻断时会使用网桥。
+Tor is not getting through directly — trying bridges…|||Tor 无法直接接入，正在尝试网桥…
+Tor is not moving inside the tunnel — trying the next strategy…|||隧道内的 Tor 没有进展，正在尝试下一种策略…
+Tor is ready — opening its local proxy…|||Tor 已就绪，正在开启本地代理…
+Tor stopped at {0}% and could not reach the Tor network. No pluggable transport is installed, so only plain bridges can be tried — and a network that filters Tor usually blocks those too. Use the Aether → Tor mode: Tor is then dialled through the tunnel, where the operator cannot see or block it.|||Tor 停在 {0}%，未能接入 Tor 网络。由于未安装可插拔传输插件，只能尝试普通网桥，而过滤 Tor 的网络通常也会封锁网桥。请改用 Aether → Tor 模式：Tor 会在隧道内部连接，网络运营方看不到也无法阻断。
+Transport|||传输方式
+Transport & anti-DPI|||传输与抗 DPI
+truncated NPVS compact header|||NPVS 紧凑头被截断
+truncated NPVS header|||NPVS 头被截断
+truncated NPVS payload|||NPVS 负载被截断
+Tune for my network|||针对我的网络优化
+Tunnel|||隧道
+Turbo|||极速
+Turn off the moving home-screen effects on weaker PCs. The live ping meter stays animated.|||在性能较弱的电脑上关闭首页动态效果，实时延迟仪表仍保持动画。
+Two hops: Aether connects first, then Psiphon tunnels through it. Your exit IP becomes Psiphon\u2019s, so sites that block Aether/WARP addresses open again.|||双跳：先连接 Aether，再让 Psiphon 通过它建立隧道。出口 IP 变为 Psiphon 的地址，因此封锁 Aether/WARP 地址的网站可以重新打开。
+Two hops: Aether connects first, then Tor is built INSIDE that tunnel. The network you are on sees only Aether\u2019s obfuscated transport, never Tor \u2014 so this is the mode to use where Tor is blocked. Your exit is a Tor exit node.|||双跳：先连接 Aether，再在其隧道内部建立 Tor。当前网络只能看到 Aether 的混淆流量，看不到 Tor —— 因此适用于 Tor 被阻断的网络。出口为 Tor 出口节点。
+Unexpected HTTP status|||意外的 HTTP 状态码
+unsupported file type (use .npvt, .npvs, .txt, .json or .conf)|||不支持的文件类型（请使用 .npvt、.npvs、.txt、.json 或 .conf）
+unsupported file type (use .npvt, .txt, .json or .conf)|||不支持的文件类型（请使用 .npvt、.txt、.json 或 .conf）
+unsupported NPVO1 server type|||不支持的 NPVO1 服务器类型
+unsupported NPVS compact header|||不支持的 NPVS 紧凑头
+unsupported NPVS envelope version|||不支持的 NPVS 封装版本
+unsupported NPVS password work factor|||不支持的 NPVS 密码工作因子
+unsupported NPVS server or nested lock policy|||不支持的 NPVS 服务器或嵌套锁定策略
+unsupported NPVS unlock method|||不支持的 NPVS 解锁方式
+unsupported or duplicate NPVS field|||不支持或重复的 NPVS 字段
+Upload|||上传
+Upstream proxy|||上游代理
+Upstream proxy (chaining)|||上游代理（链式）
+Use custom IP ranges|||使用自定义 IP 网段
+Use this computer as a proxy for other devices|||把这台电脑作为其他设备的代理
+Username: 1–64 Latin characters, no spaces or \":\"|||用户名：1–64 个拉丁字符，不能包含空格或冒号。
+Validating with Real Delay…|||正在用真实延迟验证…
+Verifying…|||正在验证…
+Waiting for engine-managed Psiphon…|||正在等待引擎托管的 Psiphon…
+Watchdog confirmed a persistent upstream failure — restarting the engine.|||看门狗确认上游持续故障，正在重启引擎。
+Watchdog reconnect…|||看门狗重连…
+WebRTC (real‑IP leak in browsers)|||WebRTC（浏览器真实 IP 泄露）
+What happens the moment the tunnel drops|||隧道断开瞬间会发生什么
+What's new in this version and the connection guide, any time|||随时查看本版本更新说明与连接指南
+Which programs use the tunnel, and who else may|||哪些程序使用隧道，以及还有哪些设备可以使用
+Which protocol should I use on mobile data?|||移动数据下应该用哪个协议？
+Why is my connection slow right now?|||为什么现在连接这么慢？
+Wi‑Fi address|||Wi‑Fi 地址
+Xray keeps exiting — rebuilding the whole session.|||Xray 反复退出，正在重建整个会话。
+You can ask for a new code in {0} s.|||{0} 秒后可获取新验证码。
+Your own VLESS, VMess, Trojan, Shadowsocks, SOCKS, WireGuard or npvt server, alone or chained|||自有 VLESS、VMess、Trojan、Shadowsocks、SOCKS、WireGuard 或 npvt 服务器，可单独使用或串接
+Zero Trust|||Zero Trust
+Zero Trust sign-in was cancelled, so the connection was stopped. Sign in under Settings → Zero Trust, or connect again when you have the code.|||Zero Trust 登录已取消，连接因此停止。请在「设置 → Zero Trust」中登录，或拿到验证码后重新连接。
+Zero‑leak guard active|||防泄露保护已启用
+Smart tries the protocols one at a time, starting with the one most likely to work on this network, and keeps the first one that passes the self-test.|||智能模式会逐个尝试协议，从当前网络最可能成功的方式开始，并保留第一个通过自检的协议。
+# NEXT

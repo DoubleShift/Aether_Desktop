@@ -9,14 +9,11 @@ import { getCurrentWindow } from '@tauri-apps/api/window'
 
 import { renderHome } from './views/home.js'
 import { renderSettings, renderTunnelSettings } from './views/settings.js'
-import { renderAssistant } from './views/assistant.js'
-import { renderChat } from './views/chat.js'
 import { renderDiagnostics } from './views/diagnostics.js'
 import { renderShare } from './views/share.js'
 import { renderAbout } from './views/about.js'
 
 import { t, applyLang, getLang, setLangPersister, adoptStoredLang } from './i18n.js'
-import { initAi, refreshAi } from './ai.js'
 // AETHER-APP-PATCH whats-new
 import { maybeShowWhatsNew } from './ui/whatsnew.js'
 import { setTabRouter } from './ui/nav.js'
@@ -103,8 +100,6 @@ export async function saveProfile(patch) {
   }
   app.profile = { ...base, ...patch }
   await invoke('set_profile', { profile: app.profile })
-  // ai-gate-follows-tunnel: عوض‌شدن بک‌اند دروازهٔ هوش مصنوعی (WRONG_MODE) را عوض می‌کند.
-  refreshAi()
   emit()
 }
 
@@ -174,8 +169,6 @@ const ICON_CLOSE = icon('close', 12)
 const NAV_ICONS = {
   home: icon('home'),
   advanced: icon('settings'),
-  assistant: icon('assistant'),
-  chat: icon('chat'),
   diagnostics: icon('bug_report'),
   share: icon('wifi'),
   about: icon('info'),
@@ -258,8 +251,6 @@ const VIEWS = {
   home: renderHome,
   advanced: renderSettings,
   tunnel: renderTunnelSettings,
-  assistant: renderAssistant,
-  chat: renderChat,
   diagnostics: renderDiagnostics,
   share: renderShare,
   about: renderAbout,
@@ -309,9 +300,6 @@ function renderTab() {
   // `emit()` تازه تضمین می‌کند هر چیزی که این تب نشان می‌دهد با `app.profile`/
   // `app.snapshot` *همین الان* یکی است — نه با آخرین باری که این تب دیده شد.
   emit()
-  // A tab may be opened after a missed event while it was detached; consult
-  // Rust's current tunnel state before presenting the chat gate or model list.
-  if (app.tab === 'chat' || app.tab === 'assistant') refreshAi()
 }
 
 // Drops a cached view so the next visit rebuilds it. Used by panels whose markup
@@ -399,7 +387,7 @@ export function goBack() {
   return true
 }
 
-const HEADER_TITLES = { home: 'Aether', advanced: 'Settings', tunnel: 'Tunnel settings', assistant: 'Assistant', chat: 'Chat', diagnostics: 'Diagnostics', share: 'Share over LAN', about: 'About' }
+const HEADER_TITLES = { home: 'Aether', advanced: 'Settings', tunnel: 'Tunnel settings', diagnostics: 'Diagnostics', share: 'Share over LAN', about: 'About' }
 
 function syncHeader() {
   const header = document.getElementById('mobile-header')
@@ -436,11 +424,9 @@ function wireKeys() {
 }
 
 // --- راه‌اندازی ---------------------------------------------------------
-const NAV_LABELS = { home: 'Home', advanced: 'Settings', tunnel: 'Tunnel settings', assistant: 'Aether AI', chat: 'Chat with Gemini', diagnostics: 'Diagnostics & logs', share: 'Share VPN', about: 'About' }
+const NAV_LABELS = { home: 'Home', advanced: 'Settings', tunnel: 'Tunnel settings', diagnostics: 'Diagnostics & logs', share: 'Share VPN', about: 'About' }
 // ۱.۴.۰-ui: زیرنویس هر آیتم کشو — همان متن‌های Android (strings.xml).
 const NAV_SUBS = {
-  assistant: 'Gemini inside the app: explain, optimize and chat',
-  chat: 'Ask anything, or say what should change',
   advanced: 'Connection, apps, security and troubleshooting',
   diagnostics: 'Live status of every part of the tunnel',
   share: 'Use this computer as a proxy for other devices',
@@ -464,8 +450,6 @@ function translateChrome() {
   if (menuBtn) { menuBtn.innerHTML = icon('menu', 24); menuBtn.setAttribute('aria-label', t('Menu')) }
   const backBtn = document.getElementById('back-btn')
   if (backBtn) { backBtn.innerHTML = icon('arrow_back', 24); backBtn.setAttribute('aria-label', t('Back')) }
-  const hdrAssistant = document.getElementById('hdr-assistant')
-  if (hdrAssistant) { hdrAssistant.innerHTML = icon('assistant', 22); hdrAssistant.setAttribute('aria-label', t('Assistant')); hdrAssistant.title = t('Assistant') }
   const hdrTune = document.getElementById('hdr-tune')
   if (hdrTune) { hdrTune.innerHTML = icon('tune', 22); hdrTune.setAttribute('aria-label', t('Tunnel settings')); hdrTune.title = t('Tunnel settings') }
   const dTitle = document.querySelector('.drawer__title')
@@ -521,7 +505,7 @@ async function boot() {
   app.snapshot = snapshot
   // نمایش و صدا: حالتِ آغازین فقط پایهٔ سیاست صدا است (شروع برنامه بی‌صدا).
   onConnectionState(snapshot?.state)
-  if (storedLang === 'fa' || storedLang === 'en') {
+  if (storedLang === 'fa' || storedLang === 'en' || storedLang === 'zh') {
     if (adoptStoredLang(storedLang)) translateChrome()
   } else {
     // اولین اجرا بعد از این نسخه: انتخابِ فعلیِ localStorage را به دیسک منتقل کن.
@@ -536,15 +520,9 @@ async function boot() {
 
   // جریان زندهٔ وضعیت — معادل StateFlow در اندروید (هر ۲۰۰ میلی‌ثانیه).
   let lastAccent = null
-  // ai-gate-follows-tunnel: حالت اتصالی که دروازهٔ هوش مصنوعی آخرین بار با آن سنجیده شد.
-  let lastGateState = app.snapshot?.state ?? null
   await listen('aether://state', (event) => {
     app.snapshot = event.payload
     onConnectionState(app.snapshot?.state)
-    if (app.snapshot?.state !== lastGateState) {
-      lastGateState = app.snapshot?.state ?? null
-      refreshAi()
-    }
     // فقط وقتی رنگ واقعاً عوض شده بنویس — نوشتن مداوم متغیر CSS روی <html>
     // هر ۲۰۰ms باعث style-recalc کل صفحه و گیرکردن انیمیشن کمان می‌شد.
     const accent = accentFor(app.snapshot.state)
@@ -559,7 +537,7 @@ async function boot() {
   // جریان وضعیت هوش مصنوعی. عمداً `await` نمی‌شود و در `Promise.all` بالا هم
   // نیست: صفحهٔ خانه به آن نیازی ندارد و انتظار برایش اولین رنگ‌آمیزی را عقب
   // می‌انداخت. صفحهٔ دستیار به‌محض رسیدن اولین snapshot خودش را می‌سازد.
-  initAi().catch((error) => console.error('AI layer unavailable', error))
+  // AI layer removed from this build: no assistant, no chat, no ai_* IPC.
 
   // Repaint the already-visible shell with the real state once IPC returns.
   renderTab()
