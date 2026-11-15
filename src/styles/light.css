@@ -686,3 +686,16 @@ html[data-theme="light"] .ccard {
   background: linear-gradient(180deg, #FFFFFF, #F1F5FB) !important;
   box-shadow: 0 14px 34px rgba(15, 23, 42, 0.10) !important;
 }
+
+/* Small card labels are pinned to translucent white in upstream app.css and
+   are not reached by the --cc-* variable re-pin. On a white card they turned
+   into invisible text (e.g. the "Offline" ping-quality badge). */
+html[data-theme="light"] .ccard__ping-q,
+html[data-theme="light"] .ccard__ping-k,
+html[data-theme="light"] .ccard__speed-total,
+html[data-theme="light"] .ccard__slide-k,
+html[data-theme="light"] .ccard__timer-k,
+html[data-theme="light"] .ccard__pill-k,
+html[data-theme="light"] .ccard__caption {
+  color: rgba(17, 28, 46, 0.62) !important;
+}
