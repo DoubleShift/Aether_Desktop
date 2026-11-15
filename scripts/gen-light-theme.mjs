@@ -307,10 +307,17 @@ html[data-theme="light"] .ccard__caption {
 html[data-theme="light"] .main { padding-bottom: 12px !important; }
 html[data-theme="light"] .view--home { min-height: 100% !important; }
 html[data-theme="light"] .view--home .ccard {
+  display: flex !important;
+  flex-direction: column !important;
   flex: 1 1 auto !important;
   min-height: 386px !important;
 }
+/* The card is a flex container now, so its body must grow with it. Without
+   flex:1 the body keeps its natural height and the empty space simply moves
+   inside the card instead of disappearing. .ccard__edge is position:absolute
+   and stays out of the flex flow. */
 html[data-theme="light"] .view--home .ccard__body {
+  flex: 1 1 auto !important;
   justify-content: space-between !important;
 }
 `
