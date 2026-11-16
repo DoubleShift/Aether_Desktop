@@ -956,6 +956,12 @@ export function renderAdvanced(sections) {
       if (key === 'team') {
         refreshTab(app.tab === 'tunnel' ? 'tunnel' : 'advanced')
       }
+      // پورت‌های پل در جملهٔ راهنمای «ترافیک مود» هم می‌آیند — بعد از blur
+      // بازرندر می‌کنیم تا جمله پورتِ تازه را نام ببرد (تغییر روی change است،
+      // نه وسط تایپ، پس بازسازی فیلد زیرِ نشانگر را نمی‌دزدد).
+      if (key === 'shareSocksPort' || key === 'shareHttpPort') {
+        refreshTab(app.tab === 'tunnel' ? 'tunnel' : 'advanced')
+      }
       if (key === 'accessEmail' || key === 'accessId' || key === 'accessSecret') ztRefresh(root).catch(() => {})
       // سخت‌سازی امنیتی: مقدار محرمانه بعد از ذخیره از DOM پاک می‌شود تا
       // در اسکرین‌شات/بازرسی DOM نماند (ذخیره فقط در حافظهٔ بک‌اند است).
