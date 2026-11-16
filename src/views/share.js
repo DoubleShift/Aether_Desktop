@@ -13,10 +13,16 @@ import { t } from '../i18n.js'
 import { toast } from '../ui/toast.js'
 import { openModal, modalButton, modalNote } from '../ui/modal.js'
 
-const HTTP_PORT = 10811
-const SOCKS_PORT = 10810
 const CHECK_URL = 'http://aether.check/'
 const MIN_PASSWORD = 8
+
+// Bridge ports are user-settable now (Connection settings → Local proxy
+// ports); the panel must show the configured ones, not the historical
+// defaults. 10810/10811 only remain the fallback while no profile is loaded.
+const portOf = (profile, key, fallback) => {
+  const n = Number(profile?.[key])
+  return Number.isFinite(n) && n > 0 ? n : fallback
+}
 
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c])
 const fill = (text, ...values) => values.reduce((s, v, i) => s.replace(`{${i}}`, String(v)), text)
@@ -52,12 +58,12 @@ function notice(text, kind = '') {
   return `<p class="share__notice ${kind}">${esc(text)}</p>`
 }
 
-function readyBlock(primary, others) {
+function readyBlock(primary, others, httpPort, socksPort) {
   const ip = primary.address
-  const http = `${ip}:${HTTP_PORT}`
-  const socks = `${ip}:${SOCKS_PORT}`
-  const pac = `http://${ip}:${HTTP_PORT}/proxy.pac`
-  const setup = `http://${ip}:${HTTP_PORT}/`
+  const http = `${ip}:${httpPort}`
+  const socks = `${ip}:${socksPort}`
+  const pac = `http://${ip}:${httpPort}/proxy.pac`
+  const setup = `http://${ip}:${httpPort}/`
   const ifaceLabel = (kind) => (kind === 'ethernet' ? t('Ethernet address') : t('Wi\u2011Fi address'))
 
   let html = `
@@ -280,11 +286,13 @@ export function renderShare() {
     } else if (!on) {
       body.innerHTML = notice(t('Turn on sharing, and the addresses to enter on the other device appear here.'))
     } else if (status === 'portBusy') {
-      body.innerHTML = notice(t('Ports 10810/10811 are used by another app on this PC. Close it and toggle sharing again.'), 'is-error')
+      body.innerHTML = notice(fill(t('Ports {0}/{1} are used by another app on this PC. Close it and toggle sharing again.'),
+        portOf(profile, 'shareSocksPort', 10810), portOf(profile, 'shareHttpPort', 10811)), 'is-error')
     } else if (status === 'waiting' || (status === 'ready' && !targets.length)) {
       body.innerHTML = notice(t('Connect this PC to your home Wi\u2011Fi or wired network. The addresses appear here automatically.'))
     } else if (status === 'ready') {
-      const { html, all } = readyBlock(targets[0], targets.slice(1))
+      const { html, all } = readyBlock(targets[0], targets.slice(1),
+        portOf(profile, 'shareHttpPort', 10811), portOf(profile, 'shareSocksPort', 10810))
       body.innerHTML = html
       root._shareAll = all
     } else {

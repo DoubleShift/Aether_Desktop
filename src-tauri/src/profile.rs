@@ -473,6 +473,8 @@ pub const KEEPALIVE_PRESETS: [u32; 4] = [0, 10, 25, 45];
 
 fn default_verify() -> bool { true }
 fn default_health_secs()->u64 {300}
+fn default_share_socks_port() -> u16 { crate::engine::SHARE_SOCKS_PORT }
+fn default_share_http_port() -> u16 { crate::engine::SHARE_HTTP_PORT }
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", default)]
 pub struct ConnectionProfile {
@@ -507,6 +509,16 @@ pub struct ConnectionProfile {
     /// اشتراک تونل با دستگاه‌های دیگر روی همان شبکه (پورت‌های 10810/10811).
     #[serde(default)]
     pub lan_share: bool,
+    /// Ports of the local HTTP↔SOCKS bridge. The SOCKS5 listener binds
+    /// `share_socks_port` and the HTTP proxy `share_http_port` — both loopback
+    /// only, LAN sharing binds the same ports on the LAN address. Defaults
+    /// keep the historical 10810/10811; `normalize` resets anything invalid or
+    /// colliding with the engine's own listeners. (camelCase ->
+    /// shareSocksPort / shareHttpPort on the JS side.)
+    #[serde(default = "default_share_socks_port")]
+    pub share_socks_port: u16,
+    #[serde(default = "default_share_http_port")]
+    pub share_http_port: u16,
     /// Route the finished tunnel to Windows: global (system proxy + Wintun)
     /// or local SOCKS5 bridge only. Defaults to global so existing installs
     /// are unchanged. (Persisted; camelCase -> trafficMode on the JS side.)
@@ -727,6 +739,8 @@ impl Default for ConnectionProfile {
             ech_config: String::new(),
             masque_http2: false,
             lan_share: false,
+            share_socks_port: default_share_socks_port(),
+            share_http_port: default_share_http_port(),
             traffic_mode: TrafficMode::Global,
             kill_switch: true,
             ipv6_protection: true,
@@ -806,6 +820,22 @@ impl ConnectionProfile {
         // ناصفر بسته می‌شوند.
         if self.tor_direct_secs > 0 {
             self.tor_direct_secs = self.tor_direct_secs.clamp(5, 600);
+        }
+        // Local bridge ports must be usable: privileged/low ports and the
+        // engine's own listeners are off-limits, and the two must differ. An
+        // invalid value silently falls back to the historical default rather
+        // than failing the whole profile load.
+        let reserved = [
+            crate::engine::LOCAL_SOCKS_PORT,
+            crate::engine::TOR_SOCKS_PORT,
+            crate::engine::CHAIN_SOCKS_PORT,
+        ];
+        let usable = |p: u16, other: u16| p >= 1024 && p != other && !reserved.contains(&p);
+        if !usable(self.share_socks_port, self.share_http_port) {
+            self.share_socks_port = default_share_socks_port();
+        }
+        if !usable(self.share_http_port, self.share_socks_port) {
+            self.share_http_port = default_share_http_port();
         }
     }
 
@@ -2328,6 +2358,44 @@ mod tests {
         let old = r#"{"trafficMode":"SOCKS_ONLY"}"#;
         let p: ConnectionProfile = serde_json::from_str(old).unwrap();
         assert_eq!(p.traffic_mode, TrafficMode::SocksOnly);
+    }
+
+    /// The local bridge ports ride the same camelCase contract. Old profiles
+    /// without the fields keep the historical 10810/10811; values that are
+    /// privileged, colliding with each other or with the engine's own
+    /// listeners fall back to those defaults in `normalize`.
+    #[test]
+    fn share_ports_default_and_normalize() {
+        let p: ConnectionProfile = serde_json::from_str(r#"{"trafficMode":"SOCKS_ONLY"}"#).unwrap();
+        assert_eq!(p.share_socks_port, crate::engine::SHARE_SOCKS_PORT);
+        assert_eq!(p.share_http_port, crate::engine::SHARE_HTTP_PORT);
+
+        let ok: ConnectionProfile = serde_json::from_str(
+            r#"{"shareSocksPort":20810,"shareHttpPort":20811}"#,
+        )
+        .unwrap();
+        assert_eq!(ok.share_socks_port, 20810);
+        assert_eq!(ok.share_http_port, 20811);
+
+        for (socks, http) in [
+            (80u16, 20811u16),    // privileged
+            (1819, 20811),        // the engine's own listener
+            (20810, 20810),       // the two must differ
+            (20810, 1820),        // reserved tor listener
+        ] {
+            let mut bad: ConnectionProfile =
+                serde_json::from_str(&format!(r#"{{"shareSocksPort":{socks},"shareHttpPort":{http}}}"#))
+                    .unwrap();
+            bad.normalize();
+            assert_eq!(
+                (bad.share_socks_port, bad.share_http_port),
+                (
+                    crate::engine::SHARE_SOCKS_PORT,
+                    crate::engine::SHARE_HTTP_PORT
+                ),
+                "socks={socks} http={http} should normalize to the defaults"
+            );
+        }
     }
 }
 

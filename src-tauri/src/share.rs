@@ -30,12 +30,27 @@ use std::io::{ErrorKind, Read, Write};
 use std::net::{
     IpAddr, Ipv4Addr, Shutdown, SocketAddr, TcpListener, TcpStream, ToSocketAddrs, UdpSocket,
 };
-use std::sync::atomic::{AtomicBool, AtomicU64, AtomicUsize, Ordering};
+use std::sync::atomic::{AtomicBool, AtomicU16, AtomicU64, AtomicUsize, Ordering};
 use std::sync::{Arc, OnceLock};
 use std::thread::JoinHandle;
 use std::time::{Duration, Instant};
 
 const TAG: &str = "share";
+
+/// Ports of the bridge that is currently running. The profile may move the
+/// bridge off the historical 10810/10811, and the PAC / setup pages rendered
+/// by [`serve_local_page`] must name the ports actually bound — the values
+/// recorded by [`ShareBridge::start`] are the truth, not the engine consts.
+static ACTIVE_SOCKS_PORT: AtomicU16 = AtomicU16::new(crate::engine::SHARE_SOCKS_PORT);
+static ACTIVE_HTTP_PORT: AtomicU16 = AtomicU16::new(crate::engine::SHARE_HTTP_PORT);
+
+fn active_socks_port() -> u16 {
+    ACTIVE_SOCKS_PORT.load(Ordering::Relaxed)
+}
+
+fn active_http_port() -> u16 {
+    ACTIVE_HTTP_PORT.load(Ordering::Relaxed)
+}
 /// مهلت بیکاری یک اتصال TCP رله‌شده.
 const TCP_IDLE_TIMEOUT: Duration = Duration::from_secs(300);
 const UPSTREAM_TIMEOUT: Duration = TCP_IDLE_TIMEOUT;
@@ -328,6 +343,8 @@ impl ShareBridge {
         self.tx.store(0, Ordering::Relaxed);
         self.socks_port = socks_port;
         self.http_port = http_port;
+        ACTIVE_SOCKS_PORT.store(socks_port, Ordering::Relaxed);
+        ACTIVE_HTTP_PORT.store(http_port, Ordering::Relaxed);
 
         let local = IpAddr::V4(Ipv4Addr::LOCALHOST);
         let http = spawn_listener(
@@ -1330,8 +1347,8 @@ fn serve_local_page(out: &mut TcpStream, path: &str, remote: bool) {
         IpAddr::V6(v6) => format!("[{v6}]"),
         IpAddr::V4(v4) => v4.to_string(),
     };
-    let http_port = crate::engine::SHARE_HTTP_PORT;
-    let socks_port = crate::engine::SHARE_SOCKS_PORT;
+    let http_port = active_http_port();
+    let socks_port = active_socks_port();
     if let Some(page) = share_pages::download(path) {
         return write_page(out, page);
     }

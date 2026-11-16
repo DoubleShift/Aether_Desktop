@@ -51,10 +51,13 @@ main.app.profile = PROFILE
 main.app.snapshot = { ...main.app.snapshot, state: 'CONNECTED' }
 
 const { renderSettings, SETTINGS_ROWS } = await import('../src/views/settings.js')
+// ۱۶ نوامبر: یک بازگشت برای همهٔ سطح‌ها — زیرصفحه دیگر دکمهٔ بازگشت درون‌صفحه‌ای
+// ندارد؛ «هدرِ پنجره» از طریق اسلاتِ nav.js یک پله به هاب برمی‌گردد.
+const { takeBackStep } = await import('../src/ui/nav.js')
 // This build defaults to Simplified Chinese, so a hub row may legitimately be
 // rendered with the translated label instead of the English title used by
 // SETTINGS_ROWS. Accept either form.
-const { t } = await import('../src/i18n.js')
+const { t, LANGS, getLang } = await import('../src/i18n.js')
 
 let failures = 0
 const check = (ok, what) => {
@@ -77,6 +80,10 @@ const values = [...view.querySelectorAll('.setrow__value')].map((v) => v.textCon
 console.log('values =', JSON.stringify(values))
 check(values.includes('Aether \u2192 Psiphon'), 'مقدار بک‌اند با نام خوانا نشان داده می‌شود')
 check(!values.some((v) => v.includes('_')), 'هیچ نام داخلیِ SNAKE_CASE به کاربر نشان داده نمی‌شود')
+// ردیفِ زبان باید نامِ خودِ زبان را نشان دهد (中文 همان 中文 بماند) — نسخهٔ
+// قبلی برای هر زبانِ غیر از فارسی «English» می‌نوشت.
+const nativeLang = Object.fromEntries(LANGS)[getLang()]
+check(values.includes(nativeLang), `زبانِ فعلی با نام خودش نشان داده می‌شود (${nativeLang})`)
 
 // ---- هر زیرصفحه ----
 const seen = new Set()
@@ -91,13 +98,15 @@ for (const row of SETTINGS_ROWS) {
   // `controlless`: زیرصفحه‌ای که فقط خواندنی است (بایگانیِ پیام‌ها) کنترلی ندارد.
   check(row.controlless || controls.length > 0, `${row.id}: کنترل‌های واقعی رندر شدند`)
   check(hints.length === 0, `${row.id}: هیچ ✨ـای تزریق نشده است`)
-  check(!!view.querySelector('.setpage__back'), `${row.id}: دکمهٔ بازگشت هست`)
+  // یک بازگشت برای همهٔ سطح‌ها: دکمهٔ درون‌صفحه‌ای حذف شده و بازگشتِ هدر از
+  // اسلاتِ nav.js یک پله به هاب برمی‌گردد — نه مستقیم به خانه.
+  check(!view.querySelector('.setpage__back'), `${row.id}: دکمهٔ بازگشتِ دومی در صفحه نیست`)
   for (const c of controls) {
     const key = c.dataset.key ?? c.closest('[data-key]')?.dataset.key
     if (key) seen.add(key)
   }
-  // بازگشت به هاب
-  view.querySelector('.setpage__back').dispatchEvent(new dom.window.MouseEvent('click', { bubbles: true }))
+  // بازگشت به هاب (همان مسیری که هدرِ پنجره طی می‌کند)
+  check(takeBackStep('advanced') === true, `${row.id}: گامِ بازگشتِ درون‌تابی مصرف شد`)
   check(view.querySelectorAll('.setrow').length === hubRows.length, `${row.id}: بازگشت به هاب کار می‌کند`)
 }
 
@@ -108,6 +117,8 @@ const EXPECTED = [
   'fragment', 'ech', 'lanShare', 'trafficMode', 'killSwitch', 'ipv6Protection', 'reconnectAttempts',
   'splitMode', 'splitApps', 'team', 'accessMode', 'accessId', 'accessSecret', 'gateway',
   'routeBlock', 'routeDirect', 'routeSniff', 'dns', 'upstream', 'reprovision',
+  // user-settable local bridge ports (Connection → Local proxy ports)
+  'shareSocksPort', 'shareHttpPort',
   // core 2.4.0 TLS / API options
   'masqueSni', 'apiAddress', 'apiSni', 'apiHost', 'tlsVerify', 'tlsTrustAnchors',
   'tlsCertCompression', 'tlsCiphers', 'tls13Ciphers', 'tlsGroups', 'tlsKeyShares',

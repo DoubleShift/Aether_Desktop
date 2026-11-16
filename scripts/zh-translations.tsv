@@ -317,7 +317,6 @@ PC IP address|||本机 IP 地址
 Peer address|||对端地址
 Ping strength|||延迟质量
 Poor|||较差
-Ports 10810/10811 are used by another app on this PC. Close it and toggle sharing again.|||端口 10810/10811 已被本机其他程序占用。请关闭该程序后重新开启共享。
 Preparing Aether…|||正在启动 Aether…
 Probes public Cloudflare edges: up to 1 MB per healthy candidate, potentially hundreds of MB (data charges may apply). Edge results are preliminary; applying to a server requires real proxy ping plus 3 stability checks. Disconnect first. Locked and incompatible servers cannot be changed.|||探测 Cloudflare 公网边缘节点：每个可用候选最多 1 MB，累计可能达数百 MB（可能产生流量费用）。边缘结果仅为初步参考；应用到服务器还需真实代理延迟与 3 次稳定性检查。请先断开连接。已锁定或不兼容的服务器无法修改。
 Profile exported without secrets.|||配置档案已导出（不含密钥）。
@@ -828,4 +827,11 @@ Global|||全局接管
 Local proxy port|||仅本地代理端口
 Local proxy port: only the local SOCKS5 bridge starts. Other apps keep their normal traffic; point an individual app at SOCKS5 127.0.0.1:10810 (or HTTP 127.0.0.1:10811) to tunnel just that app. No system proxy, no virtual adapter. Takes effect on the next connect.|||仅本地代理端口：只启动本地 SOCKS5 桥。其他应用保持原有流量不变；只需在单个应用里填写 SOCKS5 127.0.0.1:10810（或 HTTP 127.0.0.1:10811），即可只让该应用走隧道。不修改系统代理，不安装虚拟网卡。下次连接时生效。
 Global: the tunnel becomes the Windows system proxy and a virtual adapter carries all traffic, so every app is tunnelled. Takes effect on the next connect.|||全局接管：隧道会成为 Windows 系统代理，并由虚拟网卡承载全部流量，因此所有应用都走隧道。下次连接时生效。
+Local proxy ports|||本地代理端口
+Local SOCKS5 port|||本地 SOCKS5 端口
+Local HTTP proxy port|||本地 HTTP 代理端口
+Point apps that support SOCKS5 at 127.0.0.1:10810. Takes effect on the next connect.|||在支持 SOCKS5 的应用里填写 127.0.0.1:10810。下次连接时生效。
+The Windows system proxy is pointed here in Global mode; LAN sharing uses the same ports. Takes effect on the next connect.|||全局接管模式下 Windows 系统代理指向这里；局域网共享使用相同端口。下次连接时生效。
+Invalid or conflicting values fall back to the defaults (SOCKS5 10810, HTTP 10811) on save.|||无效或冲突的值会在保存时回退为默认值（SOCKS5 10810、HTTP 10811）。
+Ports {0}/{1} are used by another app on this PC. Close it and toggle sharing again.|||端口 {0}/{1} 已被本机上的其他程序占用。请关闭它，再重新开关共享。
 # NEXT

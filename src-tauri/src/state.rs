@@ -575,8 +575,8 @@ impl AetherController {
             if self.share.is_running() {
                 self.share.set_lan(self.profile.lan_share);
             } else if let Err(e) = self.share.start(
-                engine::SHARE_SOCKS_PORT,
-                engine::SHARE_HTTP_PORT,
+                self.profile.share_socks_port,
+                self.profile.share_http_port,
                 self.profile.lan_share,
             ) {
                 DiagnosticsLog::e(TAG, &format!("Bridge restart after LAN toggle failed: {e}"));
@@ -1686,8 +1686,8 @@ impl AetherController {
 
         // ۱) پل محلی HTTP/SOCKS — معادل hev-socks5-tunnel/ShareBridge (مسیر دادهٔ واقعی).
         if let Err(e) = self.share.start(
-            engine::SHARE_SOCKS_PORT,
-            engine::SHARE_HTTP_PORT,
+            profile.share_socks_port,
+            profile.share_http_port,
             profile.lan_share,
         ) {
             DiagnosticsLog::e(TAG, &format!("Bridge failed to start: {e}"));
@@ -1697,7 +1697,8 @@ impl AetherController {
         // Skipped in SOCKS-only mode: changing HKCU system-proxy settings would
         // take over every application, which is exactly what this mode avoids.
         if !socks_only {
-            self.sysproxy_on = sysproxy::enable(engine::SHARE_HTTP_PORT, engine::SHARE_SOCKS_PORT);
+            self.sysproxy_on =
+                sysproxy::enable(profile.share_http_port, profile.share_socks_port);
         } else {
             self.sysproxy_on = false;
         }

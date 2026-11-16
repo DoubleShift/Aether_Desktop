@@ -580,6 +580,13 @@ const SECTIONS = {
         `id="smart-note" ${p.protocol === 'SMART' && !noWarp && !torReverse(backend) ? '' : 'hidden'}`),
     ].join('')
     const trafficMode = p.trafficMode || 'GLOBAL'
+    // The bridge ports are user-settable; every sentence that names them must
+    // name the configured ones, not the historical defaults.
+    const socksPort = Number(p.shareSocksPort) || 10810
+    const httpPort = Number(p.shareHttpPort) || 10811
+    const withPorts = (key) => t(key)
+      .replaceAll('10810', String(socksPort))
+      .replaceAll('10811', String(httpPort))
     return `
     <section class="field" id="tor-caps-note" hidden>
       <span class="field__hint" id="tor-caps-note-text"></span>
@@ -590,10 +597,18 @@ const SECTIONS = {
         ${segmented(t('How traffic uses the tunnel'), 'trafficMode', TRAFFIC_MODES, trafficMode)}
         <section class="field">
           <span class="field__hint" id="traffic-mode-hint">${trafficMode === 'SOCKS_ONLY'
-            ? t('Local proxy port: only the local SOCKS5 bridge starts. Other apps keep their normal traffic; point an individual app at SOCKS5 127.0.0.1:10810 (or HTTP 127.0.0.1:10811) to tunnel just that app. No system proxy, no virtual adapter. Takes effect on the next connect.')
+            ? withPorts('Local proxy port: only the local SOCKS5 bridge starts. Other apps keep their normal traffic; point an individual app at SOCKS5 127.0.0.1:10810 (or HTTP 127.0.0.1:10811) to tunnel just that app. No system proxy, no virtual adapter. Takes effect on the next connect.')
             : t('Global: the tunnel becomes the Windows system proxy and a virtual adapter carries all traffic, so every app is tunnelled. Takes effect on the next connect.')}</span>
         </section>
       </div>
+    </div>
+    <div class="scard-group">
+      ${groupCaption(t('Local proxy ports'))}
+      <div class="sethub__card scard scard--fields">
+        ${textField(t('Local SOCKS5 port'), 'shareSocksPort', String(socksPort), '10810', { hint: withPorts('Point apps that support SOCKS5 at 127.0.0.1:10810. Takes effect on the next connect.') })}
+        ${textField(t('Local HTTP proxy port'), 'shareHttpPort', String(httpPort), '10811', { hint: withPorts('The Windows system proxy is pointed here in Global mode; LAN sharing uses the same ports. Takes effect on the next connect.') })}
+      </div>
+      ${groupFooter(t('Invalid or conflicting values fall back to the defaults (SOCKS5 10810, HTTP 10811) on save.'))}
     </div>
     <div class="scard-group">
       ${groupCaption(t('Network backend'))}
@@ -926,6 +941,15 @@ export function renderAdvanced(sections) {
       if (key === 'mtu') {
         const num = parseInt(value, 10)
         if (!isNaN(num)) value = Math.max(1280, Math.min(9000, num))
+      }
+      // Bridge ports are u16 on the Rust side: a half-typed or non-numeric
+      // value must not reach `set_profile` (it would fail the whole profile
+      // deserialize). Empty/invalid keeps the old value; Rust `normalize`
+      // resets anything unusable to the defaults.
+      if (key === 'shareSocksPort' || key === 'shareHttpPort') {
+        const num = parseInt(value, 10)
+        if (isNaN(num)) return
+        value = Math.max(1024, Math.min(65535, num))
       }
       await saveProfile({ [key]: value })
       // v10: پاک/پر شدن نام تیم، بخش Zero Trust را نشان/پنهان می‌کند.
