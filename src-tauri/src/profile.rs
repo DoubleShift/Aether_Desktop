@@ -2377,24 +2377,41 @@ mod tests {
         assert_eq!(ok.share_socks_port, 20810);
         assert_eq!(ok.share_http_port, 20811);
 
+        // normalize repairs per field: a broken port falls back to its default
+        // while the other one — if usable — is kept. Every case below must
+        // therefore come out usable (unprivileged, distinct, off the engine's
+        // own listeners) and different from what was stored.
+        const RESERVED: [u16; 3] = [
+            crate::engine::LOCAL_SOCKS_PORT,
+            crate::engine::TOR_SOCKS_PORT,
+            crate::engine::CHAIN_SOCKS_PORT,
+        ];
         for (socks, http) in [
             (80u16, 20811u16),    // privileged
             (1819, 20811),        // the engine's own listener
             (20810, 20810),       // the two must differ
             (20810, 1820),        // reserved tor listener
+            (80, 1819),           // both broken -> both defaults
         ] {
             let mut bad: ConnectionProfile =
                 serde_json::from_str(&format!(r#"{{"shareSocksPort":{socks},"shareHttpPort":{http}}}"#))
                     .unwrap();
             bad.normalize();
-            assert_eq!(
-                (bad.share_socks_port, bad.share_http_port),
-                (
-                    crate::engine::SHARE_SOCKS_PORT,
-                    crate::engine::SHARE_HTTP_PORT
-                ),
-                "socks={socks} http={http} should normalize to the defaults"
+            let (s, h) = (bad.share_socks_port, bad.share_http_port);
+            assert!(
+                s >= 1024 && h >= 1024 && s != h && !RESERVED.contains(&s) && !RESERVED.contains(&h),
+                "socks={socks} http={http} normalized to an unusable pair ({s}, {h})"
             );
+            if (socks, http) == (80, 1819) {
+                assert_eq!(
+                    (s, h),
+                    (
+                        crate::engine::SHARE_SOCKS_PORT,
+                        crate::engine::SHARE_HTTP_PORT
+                    ),
+                    "both broken should normalize to the defaults"
+                );
+            }
         }
     }
 }
