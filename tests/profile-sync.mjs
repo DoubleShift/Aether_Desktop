@@ -153,9 +153,9 @@ ok(noizeNow()?.value === 'GFW',
 // می‌افتد — و فراموش نمی‌شود.
 console.log('\n── رخداد در حینِ تایپ')
 // بازساختِ بخش ۴ ما را روی همان زیرصفحه نگه داشت (`OPEN` سرِ جایش می‌ماند —
-// همان رفتاری که نگذاشت کاربر وسطِ کار به هاب پرت شود). پس اول با دکمهٔ back
-// به هاب برگرد.
-document.querySelector('#view .setpage__back')?.dispatchEvent(new window.MouseEvent('click', { bubbles: true }))
+// همان رفتاری که نگذاشت کاربر وسطِ کار به هاب پرت شود). پس اول با گامِ بازگشتِ
+// درون‌تابی (همان مسیری که دکمهٔ back هدر طی می‌کند) به هاب برگرد.
+main.goBack()
 const hubRows2 = document.querySelectorAll('#view .setrow')
 const dnsIndex = rows.findIndex((r) => r.id === 'dns')
 ok(hubRows2.length > dnsIndex, 'با back به هاب برگشتیم')

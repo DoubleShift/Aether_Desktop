@@ -75,13 +75,15 @@ try {
    let last
    for(let attempt=0;attempt<4;attempt++){
     try{
-     if(await page.$('.setpage__back'))await click('.setpage__back')
+     // 2026-11-17: one back button for every level — the in-page back arrow was
+     // removed, so the window header's back walks a sub-page back to the hub.
+     if(await page.$('.setpage__head'))await click('#back-btn')
      if(!await page.$('.setrow'))await gotoSettings()
      // Stable row id (data-row), never a position: inserting a hub row (e.g. cleanip) must not
      // silently open a different sub-page.
      await page.waitForSelector(`.sethub .setrow[data-row="${id}"]`,{timeout:10000})
      await page.evaluate(id=>{document.querySelector(`.sethub .setrow[data-row="${id}"]`).click();document.querySelector('main').scrollTop=0},id);await wait()
-     await page.waitForSelector(id==='custom'?'.ccfg':'.setpage__back',{timeout:8000})
+     await page.waitForSelector(id==='custom'?'.ccfg':'.setpage__head',{timeout:8000})
      return
     }catch(e){last=e;await wait()}
    }

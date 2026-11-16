@@ -50,7 +50,8 @@ try {
   const click=async sel=>{await page.evaluate(s=>document.querySelector(s).click(),sel);await new Promise(r=>setTimeout(r,70))}
   await click('.drawer__item[data-tab="advanced"]')
   const open=async(id)=>{
-   if(await page.$('.setpage__back'))await click('.setpage__back')
+   // 2026-11-17: one back button — the window header's back closes a sub-page.
+   if(await page.$('.setpage__head'))await click('#back-btn')
    await page.evaluate(id=>{
     // Stable row id (data-row), not a position and not translated copy.
     document.querySelector(`.setrow[data-row="${id}"]`).click();document.querySelector('main').scrollTop=0

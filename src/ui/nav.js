@@ -67,8 +67,41 @@ export function consumeQueuedQuestion() {
   return text
 }
 
+// --- بازگشتِ درون‌تابی -----------------------------------------------------
+//
+// تِبِ تنظیمات زیرصفحهٔ خودش را دارد (هاب ↔ «اتصال» و…) که درونِ همان تب با
+// `replaceChildren` جابه‌جا می‌شود و پشتهٔ `navStack`ِ main.js آن را نمی‌بیند.
+// یک دکمهٔ بازگشت باید فقط یک جا باشد (هدرِ پنجره)، پس نمایِ فعال این‌جا یک
+// گامِ بازگشتِ درون‌تابی ثبت می‌کند؛ `goBack` اول آن را مصرف می‌کند، وگرنه
+// یک پله در پشتهٔ تب‌ها عقب می‌رود. نتیجه: از زیرصفحه یک بازگشت به هاب،
+// بازگشتِ دوم به خانه.
+
+/** گامِ بازگشتِ ثبت‌شده از سوی نمایِ فعال: `{ tab, fn }` یا `null`. */
+let backHandler = null
+
+/**
+ * نمایِ فعال گامِ بازگشتِ درون‌تابی‌اش را ثبت می‌کند. `fn = null` پاک می‌کند.
+ * `tab` چسبیده می‌شود تا دستِ‌خالی ماندنِ هندلر پس از عوض‌کردن تب تضمین شود.
+ */
+export function setBackHandler(tab, fn) {
+  backHandler = typeof fn === 'function' ? { tab, fn } : null
+}
+
+/**
+ * اگر تبِ فعال گامِ بازگشتِ ثبت‌شده دارد، مصرفش می‌کند (هندلر پاک و صدا زده
+ * می‌شود). `true` یعنی این بازگشت درونِ تب مصرف شد و پشتهٔ تب‌ها نباید جلو برود.
+ */
+export function takeBackStep(tab) {
+  if (!backHandler || backHandler.tab !== tab) return false
+  const { fn } = backHandler
+  backHandler = null
+  fn()
+  return true
+}
+
 /** فقط برای تست: اسلات را پاک می‌کند تا یک تست به تستِ بعدی نشت نکند. */
 export function resetNav() {
   router = null
   queued = null
+  backHandler = null
 }

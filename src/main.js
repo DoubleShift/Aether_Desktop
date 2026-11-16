@@ -16,7 +16,7 @@ import { renderAbout } from './views/about.js'
 import { t, applyLang, getLang, setLangPersister, adoptStoredLang } from './i18n.js'
 // AETHER-APP-PATCH whats-new
 import { maybeShowWhatsNew } from './ui/whatsnew.js'
-import { setTabRouter } from './ui/nav.js'
+import { setTabRouter, takeBackStep } from './ui/nav.js'
 import { syncLoginCode } from './ui/logincode.js'
 import { icon } from './ui/icons.js'
 
@@ -382,6 +382,10 @@ export function showTab(tab, { push = true } = {}) {
 export function goBack() {
   if (isDrawerOpen()) { closeDrawer(); return true }
   if (app.tab === 'home') return false
+  // تبِ فعال ممکن است زیرصفحهٔ درون‌تابی باز داشته باشد (هاب تنظیمات ↔
+  // «اتصال» و…). اول آن گام مصرف می‌شود؛ نتیجه: از زیرصفحه یک بازگشت به هاب،
+  // بازگشتِ دوم به خانه — یک دکمهٔ بازگشت برای همهٔ سطح‌ها.
+  if (takeBackStep(app.tab)) return true
   const prev = navStack.pop() ?? 'home'
   showTab(prev, { push: false })
   return true

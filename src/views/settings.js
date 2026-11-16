@@ -21,13 +21,14 @@ import { app, onChange, refreshTab, emit, STATE_LABEL } from '../main.js'
 import { renderAdvanced } from './advanced.js'
 // AI hint buttons were removed from this build; settings rows no longer
 // inject an assistant shortcut and no longer call ai_* IPC.
-import { t, getLang } from '../i18n.js'
+import { t, getLang, LANGS } from '../i18n.js'
 import { invoke } from '@tauri-apps/api/core'
 // AETHER-APP-PATCH custom-configs
 import { renderCustomConfigs, customConfigsValue, refreshCustomConfigs } from './customconfigs.js'
 // AETHER-APP-PATCH whats-new
 import { renderAnnouncements, MEGAPHONE } from './announcements.js'
 import { renderCleanIpSettings } from './cleanip.js'
+import { setBackHandler } from '../ui/nav.js'
 import {
   homeAnimationsEnabled, setHomeAnimationsEnabled,
   connectionSoundsEnabled, setConnectionSoundsEnabled,
@@ -35,8 +36,6 @@ import {
 
 const CHEVRON =
   '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>'
-const ARROW_BACK =
-  '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M11 6l-6 6 6 6"/></svg>'
 
 const ICON = {
   layers: '<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg>',
@@ -166,10 +165,13 @@ const GROUPS = [
         value: (p) => label(p.splitMode),
       },
       {
-        id: 'language', icon: ICON.globe, sections: ['language'],
-        title: 'Language',
-        subtitle: 'Interface language',
-        value: () => (getLang() === 'fa' ? 'فارسی' : 'English'),
+  id: 'language', icon: ICON.globe, sections: ['language'],
+  title: 'Language',
+  subtitle: 'Interface language',
+  // The value must be the language's own name in its own script (中文 stays
+  // 中文 after switching) — the old ternary rendered English for every
+  // non-Farsi language, so a Chinese UI labelled itself "English".
+  value: () => Object.fromEntries(LANGS)[getLang()] ?? getLang(),
       },
       // >>> AETHER-APP-PATCH whats-new (mobile 1.5.0 `AnnouncementsPage`)
       // زیرصفحهٔ خودش را دارد (`render`): بایگانیِ پیام‌ها عضوِ پروفایل نیست.
@@ -342,18 +344,16 @@ function subPage(row, back) {
   const page = document.createElement('div')
   page.className = 'view view--settings'
 
+  // فقط عنوان — دکمهٔ بازگشت ندارد. یک بازگشت برای همهٔ سطح‌ها در هدرِ پنجره
+  // (#back-btn) است: این‌جا دکمهٔ دومِ بازگشت کاربر را گیج می‌کرد (تصویرِ
+  // «← تنظیمات» بالای «← اتصال»). این تابع از طریق اسلاتِ `setBackHandler`
+  // (nav.js) همان رفتار را برای هدر فراهم می‌کند.
   const bar = document.createElement('div')
   bar.className = 'setpage__head'
-  const backBtn = document.createElement('button')
-  backBtn.type = 'button'
-  backBtn.className = 'setpage__back'
-  backBtn.innerHTML = ARROW_BACK
-  backBtn.setAttribute('aria-label', t('Back'))
-  backBtn.addEventListener('click', back)
   const title = document.createElement('h2')
   title.className = 'setpage__title'
   title.textContent = t(row.title)
-  bar.append(backBtn, title)
+  bar.append(title)
   page.appendChild(bar)
   page.appendChild(noticeBar())
 
@@ -412,8 +412,10 @@ function buildSettings(mode) {
   // همین‌جا، بعد از هر تعویض، تضمین می‌کند نودی که تازه دوباره متصل شد فوراً
   // با آخرین پروفایل هم‌گام شود — نه فقط با رخدادِ بعدیِ تصادفی.
   const show = (node) => { host.replaceChildren(node); emit() }
-  const goHub = () => { OPEN_BY[mode] = null; show(hub) }
-  const go = (row) => { OPEN_BY[mode] = row.id; show(subPage(row, goHub)) }
+  // بازگشتِ یک‌دکمه‌ای: هدرِ پنجره از طریق اسلاتِ nav.js به `goHub` می‌رسد.
+  // ثبت/پاک‌کردنِ هندلر باید با هر بازسازی هم هم‌گام بماند (پایین، در `reopen`).
+  const goHub = () => { OPEN_BY[mode] = null; setBackHandler(mode, null); show(hub) }
+  const go = (row) => { OPEN_BY[mode] = row.id; setBackHandler(mode, goHub); show(subPage(row, goHub)) }
 
   // ۱.۴.۰-mobile: عنوان هاب در هدر موبایل است؛ اینجا پنهان می‌ماند (mobile.css).
   const title = document.createElement('h2')
@@ -451,8 +453,8 @@ function buildSettings(mode) {
   refreshCustomConfigs()
 
   const reopen = OPEN_BY[mode] ? rowsHere.find((r) => r.id === OPEN_BY[mode]) : null
-  if (reopen) show(subPage(reopen, goHub))
-  else show(hub)
+  if (reopen) { setBackHandler(mode, goHub); show(subPage(reopen, goHub)) }
+  else { setBackHandler(mode, null); show(hub) }
   root.appendChild(host)
   return root
 }
